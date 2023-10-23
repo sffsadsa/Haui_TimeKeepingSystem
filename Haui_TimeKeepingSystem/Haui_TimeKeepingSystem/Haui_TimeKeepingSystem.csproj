@@ -79,6 +79,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\clsExportExcel.cs" />
+    <Compile Include="Common\XINIFILE.cs" />
+    <Compile Include="Database\BLDatabase.cs" />
+    <Compile Include="Database\DLDatabase.cs" />
     <Compile Include="wdHistory.xaml.cs">
       <DependentUpon>wdHistory.xaml</DependentUpon>
     </Compile>
