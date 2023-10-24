@@ -1,5 +1,8 @@
 ﻿using Aspose.Cells;
 using Haui_TimeKeepingSystem.Database;
+using Microsoft.Win32;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,7 +28,7 @@ namespace Haui_TimeKeepingSystem
     public partial class wdHistory : Window
     {
         DataTable _dtReport = new DataTable();
-        BLDatabase oBL = new BLDatabase(); 
+        BLDatabase oBL = new BLDatabase();
         public wdHistory()
         {
             InitializeComponent();
@@ -33,56 +36,63 @@ namespace Haui_TimeKeepingSystem
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-           
+
             _dtReport = oBL.GetHistoryForExport();
             grdHistory.ItemsSource = _dtReport.DefaultView;
         }
 
         private void btnExportExCell_Click(object sender, RoutedEventArgs e)
         {
-
-            string TempplateFileName = "D:\\Report\\Report Template.xlsx";
+            string TempplateFileName = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "/Report/Report Template.xlsx";
             ArrayList strSheetName = new ArrayList();
+            string filePath = "";
+            // tạo SaveFileDialog để lưu file excel
+            SaveFileDialog dialog = new SaveFileDialog();
 
-            // Xuất Excel
-            if (_dtReport.Rows.Count <= 0)
+            // chỉ lọc ra các file có định dạng Excel
+            dialog.Filter = "Excel | *.xlsx | Excel 2003 | *.xls";
+
+            // Nếu mở file và chọn nơi lưu file thành công sẽ lưu đường dẫn lại dùng
+            if (dialog.ShowDialog() == true)
             {
-                MessageBox.Show("Không tìm thấy dữ liệu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                filePath = dialog.FileName;
             }
 
+            // nếu đường dẫn null hoặc rỗng thì báo không hợp lệ và return hàm
+            if (string.IsNullOrEmpty(filePath))
+            {
+                MessageBox.Show("Đường dẫn báo cáo không hợp lệ");
+                return;
+            }
             if (File.Exists(TempplateFileName))
             {
                 try
                 {
-                    if (Title == "Chi tiết lịch sử vận chuyển")
+                    if (_dtReport.Rows.Count <= 0)
                     {
-                        DataSet ds = new DataSet();
-                        ds = _dtReport.DataSet;
-                        strSheetName.Add("Lịch sử lệnh vận chuyển");
-                        strSheetName.Add("Lịch sử Lỗi vận hành");
-
-                        Workbook wbMapping = new Workbook(TempplateFileName);
-                        Worksheet wbSheetCommandHistory = wbMapping.Worksheets[0];
-                        Worksheet wbSheetAlarmHistory = wbMapping.Worksheets[1];
-
-                        int x = wbSheetCommandHistory.Cells.ImportDataTable(_dtReport, true, 1, 0);
-
-                        string filePath = "D:\\Report\\Weekly Report_" + DateTime.Now.ToString("ddMMyyyy") + ".xlsx";
-
-                        wbMapping.Save(filePath);
+                        MessageBox.Show("Không tìm thấy dữ liệu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
                     }
 
-                    MessageBox.Show("Xuất khẩu báo cáo thành công. Vui lòng tuy cập vào <<D:\\Report>> để xem báo cáo!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    DataSet ds = new DataSet();
+                    ds = _dtReport.DataSet;
+                    strSheetName.Add("Lịch sử chấm công");
+                   
+                    Workbook wbMapping = new Workbook(TempplateFileName);
+                    Worksheet wbSheetHistory = wbMapping.Worksheets[0];
+                    int x = wbSheetHistory.Cells.ImportDataTable(_dtReport, true, 1, 0);
+                    wbMapping.Save(filePath);
+                    File.Open(filePath,FileMode.Open);
+                   // MessageBox.Show("Xuất khẩu báo cáo thành công. Vui lòng tuy cập vào "+ filePath + " để xem báo cáo!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-                catch (IOException ex)
+                catch (Exception ee)
                 {
-                    MessageBox.Show("Không thể ghi dữ liệu tới ổ đĩa. Mô tả lỗi:" + ex.Message);
+                    MessageBox.Show("Có lỗi khi lưu file!");
                 }
-                return;
             }
+
         }
     }
 }
-    
+
 

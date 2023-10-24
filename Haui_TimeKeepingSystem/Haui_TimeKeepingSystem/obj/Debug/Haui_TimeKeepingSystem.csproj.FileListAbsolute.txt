@@ -18,6 +18,11 @@ D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\o
 D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\Haui_TimeKeepingSystem.pdb
 D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\bin\Debug\Aspose.Cells.xml
 D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\bin\Debug\MaterialDesignColors.pdb
-D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\Haui_TimeKeepingSystem.exe.config
 D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\App.baml
 D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\Haui_TimeKeepingSystem.csproj.CopyComplete
+D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\bin\Debug\EPPlus.dll
+D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\bin\Debug\EPPlus.Interfaces.dll
+D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\bin\Debug\EPPlus.System.Drawing.dll
+D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
+D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\bin\Debug\EPPlus.xml
+D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml

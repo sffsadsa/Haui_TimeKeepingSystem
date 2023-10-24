@@ -24,7 +24,7 @@ namespace Haui_TimeKeepingSystem
     {
         SerialPort STM_Input = new SerialPort();
         private string strConnectFail = "Không thể kết nối tới máy chấm công của bạn. Vui lòng kiểm tra lại!";
-
+        List<clsEmployee> employee = new List<clsEmployee>();
         public MainWindow()
         {
             InitializeComponent();
@@ -32,7 +32,7 @@ namespace Haui_TimeKeepingSystem
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            ReadExCelData();
             try
             {
                 STM_Input.PortName = XINIFILE.ReadValue("COM_STM");
@@ -46,9 +46,16 @@ namespace Haui_TimeKeepingSystem
             }
         }
 
+        private void ReadExCelData()
+        {
+            ExcelComunication cls = new ExcelComunication();
+            employee.Clear();
+            employee = cls.GetAllEmployee();
+        }
+
         private void STM_Input_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
 
         private void btnHistory_Click(object sender, RoutedEventArgs e)

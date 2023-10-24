@@ -54,9 +54,17 @@ namespace Haui_TimeKeepingSystem.Common
             }
             catch
             {
-              
+
             }
 
         }
+    }
+
+    public class clsEmployee
+    {
+        public string FingerID { get; set; }
+        public string Name { get; set; }
+        public string EmployeeCode { get; set; }
+        public string Department { get; set; }
     }
 }
