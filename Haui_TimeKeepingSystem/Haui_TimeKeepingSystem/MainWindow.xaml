@@ -62,7 +62,7 @@
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="0.1*"/>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="0.2*"/>
             </Grid.RowDefinitions>
@@ -71,7 +71,7 @@
                     <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
                                                    Text="Tên nhân viên (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
 
-                    <TextBox x:Name="txtDisplayName" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    <TextBox x:Name="txtEmployeeName" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                                                   VerticalAlignment="Top" Margin="0,0,20,0" Height="40" Width="390"
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
                                                  VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Tên nhân viên"
@@ -93,6 +93,14 @@
                                                   VerticalAlignment="Top" Margin="0,0,20,0" Height="40" Width="390" 
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
                                                  VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Bộ phận"
+                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
+                    <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
+                                                   Text="Vị trí công việc (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+
+                    <TextBox x:Name="txtJob" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                                  VerticalAlignment="Top" Margin="0,0,20,0" Height="40" Width="390" 
+                                                  AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Vị trí công việc"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
                     <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
                                                    Text="Giờ vào (*)" HorizontalAlignment="Left" FontWeight="Bold"/>

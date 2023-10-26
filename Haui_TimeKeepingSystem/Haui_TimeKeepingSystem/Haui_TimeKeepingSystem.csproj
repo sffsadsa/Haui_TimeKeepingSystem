@@ -95,8 +95,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Common\clsExportExcel.cs" />
-    <Compile Include="Common\ExcelComunication.cs" />
+    <Compile Include="Common\clsEmployee.cs" />
     <Compile Include="Common\XINIFILE.cs" />
     <Compile Include="Database\BLDatabase.cs" />
     <Compile Include="Database\DLDatabase.cs" />

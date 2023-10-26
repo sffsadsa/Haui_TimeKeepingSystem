@@ -1,6 +1,8 @@
 ﻿using Haui_TimeKeepingSystem.Common;
+using Haui_TimeKeepingSystem.Database;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -23,8 +25,10 @@ namespace Haui_TimeKeepingSystem
     public partial class MainWindow : Window
     {
         SerialPort STM_Input = new SerialPort();
+        List<clsEmployee> lstEmployee;
+        BLDatabase oBL = new BLDatabase();
         private string strConnectFail = "Không thể kết nối tới máy chấm công của bạn. Vui lòng kiểm tra lại!";
-        List<clsEmployee> employee = new List<clsEmployee>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,7 +36,7 @@ namespace Haui_TimeKeepingSystem
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ReadExCelData();
+            GetallEmployee();
             try
             {
                 STM_Input.PortName = XINIFILE.ReadValue("COM_STM");
@@ -46,16 +50,55 @@ namespace Haui_TimeKeepingSystem
             }
         }
 
-        private void ReadExCelData()
+        private void GetallEmployee()
         {
-            ExcelComunication cls = new ExcelComunication();
-            employee.Clear();
-            employee = cls.GetAllEmployee();
+            lstEmployee = new List<clsEmployee>();
+            clsEmployee employee = new clsEmployee();
+            DataTable dt = new DataTable();
+            dt = oBL.GetallEmployee();
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    employee.FingerID = dr["FingerID"].ToString();
+                    employee.EmployeeName = dr["EmployeeName"].ToString();
+                    employee.EmployeeCode = dr["EmployeeCode"].ToString();
+                    employee.Department = dr["Department"].ToString();
+                    employee.EmployeeJob = dr["EmployeeJob"].ToString();
+                    lstEmployee.Add(employee);
+                }
+            }
         }
 
         private void STM_Input_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            
+            try
+            {
+                string data;
+                if (STM_Input.BytesToRead > 500)
+                {
+                    STM_Input.DiscardInBuffer();
+                    return;
+                }
+                data = STM_Input.ReadTo("x");
+                data = data.Substring(1, data.Length - 1);
+                DataAnalys(data);
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message);
+            }
+        }
+
+        private void DataAnalys(string data)
+        {
+            foreach (var item in lstEmployee)
+            {
+                if(item.FingerID == data)
+                {
+                    oBL.InsertHistory(item);
+                }    
+            }    
         }
 
         private void btnHistory_Click(object sender, RoutedEventArgs e)
