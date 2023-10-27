@@ -18,6 +18,11 @@ namespace Haui_TimeKeepingSystem.Database
         private SqlDataReader dr;
         private SqlDataAdapter da;
 
+        /// <summary>
+        /// Lấy lịch sử chấm công để xuất excel
+        /// </summary>
+        /// <param name="sqlCommand"></param>
+        /// <returns></returns>
         public DataTable GetHistoryForExport(string sqlCommand)
         {
             DataTable dt = new DataTable();
@@ -38,6 +43,11 @@ namespace Haui_TimeKeepingSystem.Database
             return dt;
         }
 
+        /// <summary>
+        /// Lấy danh sách nhân viên
+        /// </summary>
+        /// <param name="sqlCommand"></param>
+        /// <returns></returns>
         public DataTable GetallEmployee(string sqlCommand)
         {
             DataTable dt = new DataTable();
@@ -60,7 +70,12 @@ namespace Haui_TimeKeepingSystem.Database
             return dt;
         }
 
-        public void InsertHistory(string Stored, clsEmployee item)
+        /// <summary>
+        /// Thêm lịch sử chấm công
+        /// </summary>
+        /// <param name="Stored"></param>
+        /// <param name="item"></param>
+        public void InsertHistory(string Stored, clsEmployeeTimeKeeping item)
         {
             try
             {
@@ -81,6 +96,43 @@ namespace Haui_TimeKeepingSystem.Database
             {
 
             }
+        }
+
+        /// <summary>
+        /// Lấy lịch sử chấm công của 1 nhân viên nào đó
+        /// </summary>
+        /// <param name="sqlCommand"></param>
+        /// <returns></returns>
+        public DataTable GetKeppingHistoryByEmployeeCode(string sqlCommand)
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+                da = new SqlDataAdapter(sqlCommand, conn);
+                da.Fill(dt);
+                conn.Close();
+            }
+            catch (Exception ee)
+            {
+
+            }
+
+            return dt;
+        }
+
+        /// <summary>
+        /// Cập nhật lịch sử chấm công
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <param name="item"></param>
+        public void UpdateHistory(string cmd, clsEmployeeTimeKeeping item)
+        {
+            
         }
     }
 }

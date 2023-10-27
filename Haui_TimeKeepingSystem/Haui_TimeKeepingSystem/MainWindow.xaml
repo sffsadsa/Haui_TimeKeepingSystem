@@ -14,7 +14,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"  
         mc:Ignorable="d"
         Loaded="Window_Loaded" WindowStartupLocation="CenterScreen"
-        Title="Hệ thống quản lý chấm công" Height="650" Width="850">
+        Title="Hệ thống quản lý chấm công" Height="680" Width="900">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -41,7 +41,7 @@
                                FontSize="22"/>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <Image x:Name="img_People" Source=".\Resources\NVA.png"/>
+                    <Image x:Name="img_People"/>
                 </Grid>
                 <Grid Grid.Row="2">
                     <TextBlock Text="NGUYỄN VĂN A" 
@@ -122,7 +122,8 @@
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="2">
-                <Button x:Name="btnHistory" Content="Lịch sử" Width="100" Margin="300,10,0,10" Click="btnHistory_Click"/>
+                <Button x:Name="btnAddEmployee" Content="Thêm nhân viên" Width="130" Margin="280,10,0,10" Click="btnAddEmployee_Click"/>
+                <Button x:Name="btnHistory" Content="Lịch sử" Width="100" Margin="35,10,0,10" Click="btnHistory_Click"/>
             </Grid>
         </Grid>
     </Grid>

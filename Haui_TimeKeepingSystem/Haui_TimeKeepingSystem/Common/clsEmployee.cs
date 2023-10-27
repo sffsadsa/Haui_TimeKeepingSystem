@@ -13,5 +13,18 @@ namespace Haui_TimeKeepingSystem.Common
         public string EmployeeCode { get; set; }
         public string Department { get; set; }
         public string EmployeeJob { get; set; }
+        public string ImagePath { get; set; }
+    }
+
+    public class clsEmployeeTimeKeeping
+    {
+        public Guid ID { get; set; }
+        public string FingerID { get; set; }
+        public string EmployeeName { get; set; }
+        public string EmployeeCode { get; set; }
+        public string Department { get; set; }
+        public string EmployeeJob { get; set; }
+        public DateTime InputTime { get; set; }
+        public DateTime OutputTime { get; set; }
     }
 }
