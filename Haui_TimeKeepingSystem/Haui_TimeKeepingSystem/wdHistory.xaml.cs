@@ -43,7 +43,8 @@ namespace Haui_TimeKeepingSystem
 
         private void btnExportExCell_Click(object sender, RoutedEventArgs e)
         {
-            string TempplateFileName = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "/Report/Report Template.xlsx";
+            string TemplateFileName = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "/Report/ReportTemplate.xlsx";
+            TemplateFileName = TemplateFileName.Substring(6, TemplateFileName.Length - 6);
             ArrayList strSheetName = new ArrayList();
             string filePath = "";
             // tạo SaveFileDialog để lưu file excel
@@ -64,7 +65,7 @@ namespace Haui_TimeKeepingSystem
                 MessageBox.Show("Đường dẫn báo cáo không hợp lệ");
                 return;
             }
-            if (File.Exists(TempplateFileName))
+            if (File.Exists(TemplateFileName))
             {
                 try
                 {
@@ -77,13 +78,13 @@ namespace Haui_TimeKeepingSystem
                     DataSet ds = new DataSet();
                     ds = _dtReport.DataSet;
                     strSheetName.Add("Lịch sử chấm công");
-                   
-                    Workbook wbMapping = new Workbook(TempplateFileName);
+
+                    Workbook wbMapping = new Workbook(TemplateFileName);
                     Worksheet wbSheetHistory = wbMapping.Worksheets[0];
                     int x = wbSheetHistory.Cells.ImportDataTable(_dtReport, true, 1, 0);
                     wbMapping.Save(filePath);
-                    File.Open(filePath,FileMode.Open);
-                   // MessageBox.Show("Xuất khẩu báo cáo thành công. Vui lòng tuy cập vào "+ filePath + " để xem báo cáo!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    File.Open(filePath, FileMode.Open);
+                    // MessageBox.Show("Xuất khẩu báo cáo thành công. Vui lòng tuy cập vào "+ filePath + " để xem báo cáo!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
                 catch (Exception ee)
                 {

@@ -24,7 +24,7 @@ namespace Haui_TimeKeepingSystem.Database
             DateTime ToDate = new DateTime(now.Year, now.Month, now.Day, 23, 59, 59);
             DateTime FromDate = new DateTime(now.Year, now.Month, 1, 00, 00, 00);
 
-            string sqlCommand = "EXEC dbo.Proc_GetKeppingHistory @FromDate = '" + FromDate + "', @ToDate = '" + ToDate + "', @EmployeeCode = 'all'";
+            string sqlCommand = "EXEC dbo.Proc_GetKeppingHistory @FromDate = '" + FromDate.ToString("yyyy-MM-dd 00:00:00") + "', @ToDate = '" + ToDate.ToString("yyyy-MM-dd 23:59:59") + "', @EmployeeCode = 'all'";
             return db.GetHistoryForExport(sqlCommand);
         }
 
@@ -34,7 +34,7 @@ namespace Haui_TimeKeepingSystem.Database
         /// <returns></returns>
         public DataTable GetallEmployee()
         {
-            string cmd = "Proc_GetAllEmployee";
+            string cmd = "EXEC Proc_GetAllEmployee";
             return db.GetallEmployee(cmd);
         }
 
@@ -59,7 +59,7 @@ namespace Haui_TimeKeepingSystem.Database
             DateTime ToDate = new DateTime(now.Year, now.Month, now.Day, 23, 59, 59);
             DateTime FromDate = new DateTime(now.Year, now.Month, now.Day, 00, 00, 00);
 
-            string sqlCommand = "EXEC dbo.Proc_GetKeppingHistory @FromDate = '" + FromDate + "', @ToDate = '" + ToDate + "', @EmployeeCode = '" + employeeCode + "'";
+            string sqlCommand = "EXEC dbo.Proc_GetKeppingHistory @FromDate = '" + FromDate.ToString("yyyy-MM-dd 00:00:00") + "', @ToDate = '" + ToDate.ToString("yyyy-MM-dd 23:59:59") + "', @EmployeeCode = '" + employeeCode + "'";
             return db.GetKeppingHistoryByEmployeeCode(employeeCode);
         }
 

@@ -36,7 +36,7 @@ namespace Haui_TimeKeepingSystem.Database
                 da.Fill(dt);
                 conn.Close();
             }
-            catch (Exception ee)
+                catch (Exception ee)
             {
 
             }

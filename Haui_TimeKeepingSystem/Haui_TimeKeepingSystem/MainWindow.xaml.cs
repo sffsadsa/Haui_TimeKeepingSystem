@@ -146,6 +146,9 @@ namespace Haui_TimeKeepingSystem
                     txtEmployeeCode.Text = TimeKeeping.EmployeeCode;
                     txtDepartMent.Text = TimeKeeping.Department;
                     txtJob.Text = TimeKeeping.EmployeeJob;
+                    txtName.Text = TimeKeeping.EmployeeName;
+                    txtCode.Text = TimeKeeping.EmployeeCode;
+
                     img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
 
                     DataTable KeepHistory = oBL.GetKeppingHistoryByEmployeeCode(item.EmployeeCode);
