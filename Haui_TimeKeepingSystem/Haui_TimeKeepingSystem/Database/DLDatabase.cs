@@ -36,7 +36,7 @@ namespace Haui_TimeKeepingSystem.Database
                 da.Fill(dt);
                 conn.Close();
             }
-                catch (Exception ee)
+            catch (Exception ee)
             {
 
             }
@@ -131,6 +131,52 @@ namespace Haui_TimeKeepingSystem.Database
         /// <param name="cmd"></param>
         /// <param name="item"></param>
         public void UpdateHistory(string cmd, clsEmployeeTimeKeeping item)
+        {
+
+        }
+
+        /// <summary>
+        /// Lấy ra fingerID lớn nhất để thêm người mới
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public string GetNewFingerID(string sqlCommand)
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+                da = new SqlDataAdapter(sqlCommand, conn);
+                da.Fill(dt);
+                conn.Close();
+
+            }
+            catch (Exception ee)
+            {
+
+            }
+            if (dt.Rows.Count > 0)
+            {
+                return dt.Rows[0]["FingerID"].ToString();
+            }
+            else
+            {
+                return "0";
+            }
+        }
+
+        /// <summary>
+        /// Thực hiện lưu nhân viên mới thêm
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <param name="employee"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        public void SaveEmployee(string cmd, clsEmployee employee)
         {
             
         }

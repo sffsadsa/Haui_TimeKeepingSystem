@@ -26,3 +26,5 @@ D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\b
 D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
 D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\bin\Debug\EPPlus.xml
 D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml
+D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\wdAddEmployee.g.cs
+D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\wdAddEmployee.baml

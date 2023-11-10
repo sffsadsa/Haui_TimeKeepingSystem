@@ -30,6 +30,7 @@ namespace Haui_TimeKeepingSystem
         BLDatabase oBL = new BLDatabase();
         private bool mAddEmployee = false;
         private string strConnectFail = "Không thể kết nối tới máy chấm công của bạn. Vui lòng kiểm tra lại!";
+        private string mFingerID = string.Empty;
 
         public MainWindow()
         {
@@ -70,8 +71,12 @@ namespace Haui_TimeKeepingSystem
             }
         }
 
+        /// <summary>
+        /// Lấy ra danh sách nhân viên
+        /// </summary>
         private void GetallEmployee()
         {
+            lstEmployee.Clear();
             lstEmployee = new List<clsEmployee>();
             clsEmployee employee = new clsEmployee();
             DataTable dt = new DataTable();
@@ -91,6 +96,15 @@ namespace Haui_TimeKeepingSystem
             }
         }
 
+        /// <summary>
+        /// Xử lý nhận dữ liệu từ dưới arduino gửi lên
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// Cú pháp gửi từ arduino lên PC: i + data + x
+        /// data: A1 : hoàn thành lấy vân tay lần 1
+        ///       A2 : Hoàn thành lấy vân tay lần 2
+        ///       ID vân tay lấy từ arduino
         private void STM_Input_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             try
@@ -120,9 +134,26 @@ namespace Haui_TimeKeepingSystem
             }
         }
 
+        /// <summary>
+        /// Thực hiện các bước thêm vân tay nhân viên mới
+        /// </summary>
+        /// <param name="data"></param>
         private void AddNewEmployee(string data)
         {
+            if(data == "A1")
+            {
+                // Hoàn thành quét vân tay lần 1
+                MessageBox.Show("Vui lòng xác thực lại vân tay", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
+            }
+            if (data == "A2")
+            {
+                // Hoàn thành quét vân tay lần 2 ==> Lưu xong vân tay vào arduino
+                wdAddEmployee frm = new wdAddEmployee();
+                frm.FingerID = mFingerID;
+                frm.ShowDialog();
+            }
+            GetallEmployee();
         }
 
         /// <summary>
@@ -182,16 +213,30 @@ namespace Haui_TimeKeepingSystem
             }
         }
 
+        /// <summary>
+        /// Thực hiện lấy ra lịch sử chấm công nhân viên
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnHistory_Click(object sender, RoutedEventArgs e)
         {
             wdHistory frm = new wdHistory();
             frm.ShowDialog();
         }
 
+        /// <summary>
+        /// Thực hiện thêm nhân viên mới
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddEmployee_Click(object sender, RoutedEventArgs e)
         {
+         
             MessageBox.Show("Vui lòng đặt tay vào máy quét", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
             mAddEmployee = true;
+            mFingerID = oBL.GetNewFingerID();
+            STM_Input.Write(mFingerID);
+
         }
     }
 }

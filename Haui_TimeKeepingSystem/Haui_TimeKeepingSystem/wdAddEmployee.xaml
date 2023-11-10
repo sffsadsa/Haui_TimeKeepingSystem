@@ -1,0 +1,103 @@
+﻿<Window x:Class="Haui_TimeKeepingSystem.wdAddEmployee"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Haui_TimeKeepingSystem"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"  
+        mc:Ignorable="d" Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen"
+        Title="Thêm nhân viên" Height="650" Width="450">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="0.2*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1">
+                <StackPanel>
+                    <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
+                                                   Text="Tên nhân viên (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+
+                    <TextBox x:Name="txtEmployeeName" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                                  VerticalAlignment="Top"  Height="40" Width="400"
+                                                  AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Tên nhân viên"
+                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
+
+                    <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
+                                                   Text="Mã nhân viên (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+
+                    <TextBox x:Name="txtEmployeeCode" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                                  VerticalAlignment="Top" Height="40" Width="400" 
+                                                  AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Mã nhân viên"
+                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
+
+                    <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
+                                                   Text="Bộ phận (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+
+                    <TextBox x:Name="txtDepartMent" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                                  VerticalAlignment="Top" Height="40" Width="400" 
+                                                  AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Bộ phận"
+                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
+
+                    <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
+                                                   Text="Vị trí công việc (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+
+                    <TextBox x:Name="txtJob" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                                  VerticalAlignment="Top"  Height="40" Width="400" 
+                                                  AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Vị trí công việc"
+                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
+
+                    <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
+                                                   Text="Hình ảnh (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+
+                    <TextBox x:Name="txtPicturePath" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                                  VerticalAlignment="Top" Height="40" Width="400" 
+                                                  AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Hình ảnh nhân viên"
+                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
+
+                    <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
+                                                   Text="Mã số vân tay (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+
+                    <TextBox x:Name="txtFingerID" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                                  VerticalAlignment="Top"  Height="40" Width="400"
+                                                  AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Mã số vân tay"
+                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
+
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="12.5*"/>
+                <ColumnDefinition Width="6.5*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="2">
+                <Button x:Name="btnSave" Content="Lưu"  HorizontalAlignment="Right"
+                        Width="100" Click="btnSave_Click"/>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</Window>

@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace Haui_TimeKeepingSystem.Database
 {
@@ -24,7 +25,7 @@ namespace Haui_TimeKeepingSystem.Database
             DateTime ToDate = new DateTime(now.Year, now.Month, now.Day, 23, 59, 59);
             DateTime FromDate = new DateTime(now.Year, now.Month, 1, 00, 00, 00);
 
-            string sqlCommand = "EXEC dbo.Proc_GetKeppingHistory @FromDate = '" + FromDate.ToString("yyyy-MM-dd 00:00:00") + "', @ToDate = '" + ToDate.ToString("yyyy-MM-dd 23:59:59") + "', @EmployeeCode = 'all'";
+            string sqlCommand = "EXEC dbo.Proc_GetKeppingHistory @FromDate = '" + FromDate + "', @ToDate = '" + ToDate + "', @EmployeeCode = 'all'";
             return db.GetHistoryForExport(sqlCommand);
         }
 
@@ -34,7 +35,7 @@ namespace Haui_TimeKeepingSystem.Database
         /// <returns></returns>
         public DataTable GetallEmployee()
         {
-            string cmd = "EXEC Proc_GetAllEmployee";
+            string cmd = "Proc_GetAllEmployee";
             return db.GetallEmployee(cmd);
         }
 
@@ -59,7 +60,7 @@ namespace Haui_TimeKeepingSystem.Database
             DateTime ToDate = new DateTime(now.Year, now.Month, now.Day, 23, 59, 59);
             DateTime FromDate = new DateTime(now.Year, now.Month, now.Day, 00, 00, 00);
 
-            string sqlCommand = "EXEC dbo.Proc_GetKeppingHistory @FromDate = '" + FromDate.ToString("yyyy-MM-dd 00:00:00") + "', @ToDate = '" + ToDate.ToString("yyyy-MM-dd 23:59:59") + "', @EmployeeCode = '" + employeeCode + "'";
+            string sqlCommand = "EXEC dbo.Proc_GetKeppingHistory @FromDate = '" + FromDate + "', @ToDate = '" + ToDate + "', @EmployeeCode = '" + employeeCode + "'";
             return db.GetKeppingHistoryByEmployeeCode(employeeCode);
         }
 
@@ -71,6 +72,28 @@ namespace Haui_TimeKeepingSystem.Database
         {
             string cmd = "Proc_UpdateHistory";
             db.UpdateHistory(cmd, item);
+        }
+
+        /// <summary>
+        /// Tính toán ID của người mới
+        /// </summary>
+        /// <returns></returns>
+        public string GetNewFingerID()
+        {
+            string cmd = "Proc_GetLastFingerID";
+            int newID = int.Parse(db.GetNewFingerID(cmd)) + 1;
+            return newID.ToString();
+        }
+
+        /// <summary>
+        /// Thực hiện lưu thông tin nhân viên mới
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        public void SaveEmployee(clsEmployee employee)
+        {
+            string cmd = "Proc_InsertEmployee";
+            db.SaveEmployee(cmd, employee);
         }
     }
 }
