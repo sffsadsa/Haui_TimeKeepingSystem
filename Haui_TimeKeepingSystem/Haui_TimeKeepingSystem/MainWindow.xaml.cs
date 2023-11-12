@@ -6,6 +6,7 @@ using System.Data;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -115,16 +116,23 @@ namespace Haui_TimeKeepingSystem
                     STM_Input.DiscardInBuffer();
                     return;
                 }
+                //data = STM_Input.ReadExisting();
                 data = STM_Input.ReadTo("x");
                 data = data.Substring(1, data.Length - 1);
                 if (!mAddEmployee)
                 {
-                    DataAnalys(data);
+
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        DataAnalys(data);
+                    });
                 }
                 else
                 {
-                    AddNewEmployee(data);
-                    mAddEmployee = false;
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        AddNewEmployee(data);
+                    });
                 }
 
             }
@@ -140,18 +148,23 @@ namespace Haui_TimeKeepingSystem
         /// <param name="data"></param>
         private void AddNewEmployee(string data)
         {
-            if(data == "A1")
+            if (data.Contains("A1"))
             {
                 // Hoàn thành quét vân tay lần 1
                 MessageBox.Show("Vui lòng xác thực lại vân tay", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
             }
-            if (data == "A2")
+            if (data.Contains("A2"))
             {
-                // Hoàn thành quét vân tay lần 2 ==> Lưu xong vân tay vào arduino
-                wdAddEmployee frm = new wdAddEmployee();
-                frm.FingerID = mFingerID;
-                frm.ShowDialog();
+                this.Dispatcher.Invoke(() =>
+                {
+                    // Hoàn thành quét vân tay lần 2 ==> Lưu xong vân tay vào arduino
+                    wdAddEmployee frm = new wdAddEmployee();
+                    frm.FingerID = mFingerID;
+                    frm.ShowDialog();
+                    mAddEmployee = false;
+                });
+
             }
             GetallEmployee();
         }
@@ -183,7 +196,7 @@ namespace Haui_TimeKeepingSystem
                     img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
 
                     DataTable KeepHistory = oBL.GetKeppingHistoryByEmployeeCode(item.EmployeeCode);
-                    if (KeepHistory != null)
+                    if (KeepHistory.Rows.Count > 0)
                     {
                         //Nếu đã chấm công vào lớn hơn 5p thì tính là chấm công ra
                         if ((DateTime.Now - DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString())).TotalMinutes > 5)
@@ -234,10 +247,11 @@ namespace Haui_TimeKeepingSystem
             try
             {
                 MessageBox.Show("Vui lòng đặt tay vào máy quét", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                mAddEmployee = true;
                 mFingerID = oBL.GetNewFingerID();
                 STM_Input.Write("t");
+                Thread.Sleep(1000);
                 STM_Input.Write(mFingerID);
+                mAddEmployee = true;
 
             }
             catch (Exception ee)
@@ -245,7 +259,7 @@ namespace Haui_TimeKeepingSystem
 
                 MessageBox.Show(ee.ToString());
             }
-           
+
         }
     }
 }
