@@ -39,6 +39,7 @@ namespace Haui_TimeKeepingSystem
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            //img_People.Source = new BitmapImage(new Uri("pack://application:,,," + "./Resources/NVA.png")); //"/Images/service.png"
 
             CheckLiensce();
             GetallEmployee();
@@ -76,7 +77,6 @@ namespace Haui_TimeKeepingSystem
         /// </summary>
         private void GetallEmployee()
         {
-            lstEmployee.Clear();
             lstEmployee = new List<clsEmployee>();
             clsEmployee employee = new clsEmployee();
             DataTable dt = new DataTable();
@@ -231,12 +231,21 @@ namespace Haui_TimeKeepingSystem
         /// <param name="e"></param>
         private void btnAddEmployee_Click(object sender, RoutedEventArgs e)
         {
-         
-            MessageBox.Show("Vui lòng đặt tay vào máy quét", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-            mAddEmployee = true;
-            mFingerID = oBL.GetNewFingerID();
-            STM_Input.Write(mFingerID);
+            try
+            {
+                MessageBox.Show("Vui lòng đặt tay vào máy quét", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                mAddEmployee = true;
+                mFingerID = oBL.GetNewFingerID();
+                STM_Input.Write("t");
+                STM_Input.Write(mFingerID);
 
+            }
+            catch (Exception ee)
+            {
+
+                MessageBox.Show(ee.ToString());
+            }
+           
         }
     }
 }

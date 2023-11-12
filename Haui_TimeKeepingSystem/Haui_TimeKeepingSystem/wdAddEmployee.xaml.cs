@@ -1,5 +1,6 @@
 ﻿using Haui_TimeKeepingSystem.Common;
 using Haui_TimeKeepingSystem.Database;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -93,5 +94,31 @@ namespace Haui_TimeKeepingSystem
             }
             return Result;
         }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+       
+        private void btnOpenFile_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            string filePath = "";
+            // tạo SaveFileDialog để lưu file excel
+            OpenFileDialog dialog = new OpenFileDialog();
+
+            // chỉ lọc ra các file có định dạng Excel
+            dialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.tif;...";
+
+            // Nếu mở file và chọn nơi lưu file thành công sẽ lưu đường dẫn lại dùng
+            if (dialog.ShowDialog() == true)
+            {
+                filePath = dialog.FileName.Replace('\\',',');
+            }
+            int x = filePath.Split(',').Length;
+            string path = "./" + filePath.Split(',')[x - 2] + "/" + filePath.Split(',')[x - 1];
+            txtPicturePath.Text = path;
+        }
+
     }
 }

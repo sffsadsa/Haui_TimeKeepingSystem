@@ -1,4 +1,5 @@
 ﻿using Haui_TimeKeepingSystem.Common;
+using Org.BouncyCastle.Cms;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -7,6 +8,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace Haui_TimeKeepingSystem.Database
 {
@@ -88,7 +91,13 @@ namespace Haui_TimeKeepingSystem.Database
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = Stored;
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@ID", new Guid());
+                cmd.Parameters.AddWithValue("@ID", item.ID);
+                cmd.Parameters.AddWithValue("@FingerID", item.FingerID);
+                cmd.Parameters.AddWithValue("@EmployeeName", item.EmployeeName);
+                cmd.Parameters.AddWithValue("@EmployeeCode", item.EmployeeCode);
+                cmd.Parameters.AddWithValue("@Department", item.Department);
+                cmd.Parameters.AddWithValue("@EmployeeJob", item.EmployeeJob);
+                cmd.Parameters.AddWithValue("@InputTime", item.InputTime);
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
@@ -130,9 +139,29 @@ namespace Haui_TimeKeepingSystem.Database
         /// </summary>
         /// <param name="cmd"></param>
         /// <param name="item"></param>
-        public void UpdateHistory(string cmd, clsEmployeeTimeKeeping item)
+        public void UpdateHistory(string Stored, clsEmployeeTimeKeeping item)
         {
 
+            try
+            {
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = Stored;
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@ID", item.ID);
+                cmd.Parameters.AddWithValue("@OutputTime", item.OutputTime);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ee)
+            {
+
+            }
         }
 
         /// <summary>
@@ -176,9 +205,34 @@ namespace Haui_TimeKeepingSystem.Database
         /// <param name="cmd"></param>
         /// <param name="employee"></param>
         /// <exception cref="NotImplementedException"></exception>
-        public void SaveEmployee(string cmd, clsEmployee employee)
+        public void SaveEmployee(string Stored, clsEmployee employee)
         {
-            
+        
+            try
+            {
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = Stored;
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@ID", Guid.NewGuid());
+                cmd.Parameters.AddWithValue("@FingerID", employee.FingerID);
+                cmd.Parameters.AddWithValue("@EmployeeName", employee.EmployeeName);
+                cmd.Parameters.AddWithValue("@EmployeeCode", employee.EmployeeCode);
+                cmd.Parameters.AddWithValue("@Department", employee.Department);
+                cmd.Parameters.AddWithValue("@EmployeeJob", employee.EmployeeJob);
+                cmd.Parameters.AddWithValue("@ImagePath", employee.ImagePath);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ee)
+            {
+
+            }
         }
     }
 }
