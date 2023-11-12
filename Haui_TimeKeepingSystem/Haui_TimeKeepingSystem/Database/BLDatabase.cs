@@ -60,8 +60,8 @@ namespace Haui_TimeKeepingSystem.Database
             DateTime ToDate = new DateTime(now.Year, now.Month, now.Day, 23, 59, 59);
             DateTime FromDate = new DateTime(now.Year, now.Month, now.Day, 00, 00, 00);
 
-            string sqlCommand = "EXEC dbo.Proc_GetKeppingHistory @FromDate = '" + FromDate + "', @ToDate = '" + ToDate + "', @EmployeeCode = '" + employeeCode + "'";
-            return db.GetKeppingHistoryByEmployeeCode(employeeCode);
+            string sqlCommand = "EXEC dbo.Proc_GetKeppingHistory @FromDate = '" + FromDate.ToString("yyyy-MM-dd 00:00:00") + "', @ToDate = '" + ToDate.ToString("yyyy-MM-dd 23:59:59") + "', @EmployeeCode = '" + employeeCode + "'";
+            return db.GetKeppingHistoryByEmployeeCode(sqlCommand);
         }
 
         /// <summary>

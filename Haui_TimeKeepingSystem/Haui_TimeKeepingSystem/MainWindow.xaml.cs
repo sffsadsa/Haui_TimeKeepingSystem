@@ -27,7 +27,7 @@ namespace Haui_TimeKeepingSystem
     public partial class MainWindow : Window
     {
         SerialPort STM_Input = new SerialPort();
-        List<clsEmployee> lstEmployee;
+        List<clsEmployee> lstEmployee = new List<clsEmployee>();
         BLDatabase oBL = new BLDatabase();
         private bool mAddEmployee = false;
         private string strConnectFail = "Không thể kết nối tới máy chấm công của bạn. Vui lòng kiểm tra lại!";
@@ -78,14 +78,14 @@ namespace Haui_TimeKeepingSystem
         /// </summary>
         private void GetallEmployee()
         {
-            lstEmployee = new List<clsEmployee>();
-            clsEmployee employee = new clsEmployee();
+            lstEmployee.Clear();       
             DataTable dt = new DataTable();
             dt = oBL.GetallEmployee();
             if (dt.Rows.Count > 0)
             {
                 foreach (DataRow dr in dt.Rows)
                 {
+                    clsEmployee employee = new clsEmployee();
                     employee.FingerID = dr["FingerID"].ToString();
                     employee.EmployeeName = dr["EmployeeName"].ToString();
                     employee.EmployeeCode = dr["EmployeeCode"].ToString();
@@ -163,10 +163,9 @@ namespace Haui_TimeKeepingSystem
                     frm.FingerID = mFingerID;
                     frm.ShowDialog();
                     mAddEmployee = false;
+                    GetallEmployee();
                 });
-
-            }
-            GetallEmployee();
+            }       
         }
 
         /// <summary>
@@ -199,17 +198,21 @@ namespace Haui_TimeKeepingSystem
                     if (KeepHistory.Rows.Count > 0)
                     {
                         //Nếu đã chấm công vào lớn hơn 5p thì tính là chấm công ra
-                        if ((DateTime.Now - DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString())).TotalMinutes > 5)
+                        if ((DateTime.Now - DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString())).TotalMinutes > 3)
                         {
                             TimeKeeping.ID = Guid.Parse(KeepHistory.Rows[0]["ID"].ToString());
                             TimeKeeping.InputTime = DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString());
                             TimeKeeping.OutputTime = DateTime.Now;
                             oBL.UpdateHistory(TimeKeeping);
+                            txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
+                            txtOutputTime.Text = TimeKeeping.OutputTime.ToString("HH:mm:ss dd/MM/yyyy");
                         }
-
-                        txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                        txtOutputTime.Text = TimeKeeping.OutputTime.ToString("HH:mm:ss dd/MM/yyyy");
-
+                        else
+                        {
+                            TimeKeeping.InputTime = DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString());
+                            txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
+                            txtOutputTime.Text = "";
+                        }
                     }
                     else
                     {

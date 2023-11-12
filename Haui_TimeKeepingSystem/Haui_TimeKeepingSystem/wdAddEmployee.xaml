@@ -69,7 +69,7 @@
                                                    Text="Hình ảnh (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
 
                     <TextBox x:Name="txtPicturePath" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                                                  VerticalAlignment="Top" Height="40" Width="415" 
+                                                  VerticalAlignment="Top" Height="40" Width="415" Text="./Resources/NVA.png"
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Left"
                                                  VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Hình ảnh nhân viên"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
