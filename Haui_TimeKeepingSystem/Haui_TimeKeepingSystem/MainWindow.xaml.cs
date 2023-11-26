@@ -59,7 +59,7 @@ namespace Haui_TimeKeepingSystem
 
         private void CheckLiensce()
         {
-            DateTime LiesnceDate = new DateTime(2024, 12, 31, 23, 59, 59);
+            DateTime LiesnceDate = new DateTime(2024, 02, 15, 23, 59, 59);
             DateTime dateTime = DateTime.Now;
 
             int x = (dateTime - LiesnceDate).Days;
