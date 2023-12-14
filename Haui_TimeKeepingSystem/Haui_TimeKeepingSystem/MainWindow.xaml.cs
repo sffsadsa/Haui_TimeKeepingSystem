@@ -78,7 +78,7 @@ namespace Haui_TimeKeepingSystem
         /// </summary>
         private void GetallEmployee()
         {
-            lstEmployee.Clear();       
+            lstEmployee.Clear();
             DataTable dt = new DataTable();
             dt = oBL.GetallEmployee();
             if (dt.Rows.Count > 0)
@@ -87,6 +87,7 @@ namespace Haui_TimeKeepingSystem
                 {
                     clsEmployee employee = new clsEmployee();
                     employee.FingerID = dr["FingerID"].ToString();
+                    employee.CardID = dr["CardID"].ToString();
                     employee.EmployeeName = dr["EmployeeName"].ToString();
                     employee.EmployeeCode = dr["EmployeeCode"].ToString();
                     employee.Department = dr["Department"].ToString();
@@ -105,7 +106,9 @@ namespace Haui_TimeKeepingSystem
         /// Cú pháp gửi từ arduino lên PC: i + data + x
         /// data: A1 : hoàn thành lấy vân tay lần 1
         ///       A2 : Hoàn thành lấy vân tay lần 2
+        ///       A3 + RFID_code: mã RFID của nv mới khi thêm
         ///       ID vân tay lấy từ arduino
+        ///  f_ + RFID +x  : gửi mã thẻ của nhân viên khi quẹt chấm công
         private void STM_Input_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             try
@@ -118,20 +121,33 @@ namespace Haui_TimeKeepingSystem
                 }
                 //data = STM_Input.ReadExisting();
                 data = STM_Input.ReadTo("x");
-                data = data.Substring(1, data.Length - 1);
-                if (!mAddEmployee)
+                if (data.Substring(0, 1) == "i")
                 {
-
-                    this.Dispatcher.Invoke(() =>
+                    data = data.Substring(1, data.Length - 1);
+                    if (!mAddEmployee)
                     {
-                        DataAnalys(data);
-                    });
+                        //chấm công bẳng vân tay
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            DataAnalys(data);
+                        });
+                    }
+                    else
+                    {
+                        //thêm nhân viên
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            AddNewEmployee(data);
+                        });
+                    }
                 }
-                else
+                else if (data.Substring(0, 1) == "f")
                 {
+                    //Chấm công bằng thẻ
                     this.Dispatcher.Invoke(() =>
                     {
-                        AddNewEmployee(data);
+                        data = data.Substring(2, data.Length - 2);
+                        CheckInByCard(data);
                     });
                 }
 
@@ -139,6 +155,69 @@ namespace Haui_TimeKeepingSystem
             catch (Exception ee)
             {
                 MessageBox.Show(ee.Message);
+            }
+        }
+
+        /// <summary>
+        /// nhân viên chấm công bằng thẻ RF
+        /// </summary>
+        /// <param name="data"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void CheckInByCard(string data)
+        {
+            foreach (var item in lstEmployee)
+            {
+                if (item.CardID == data)
+                {
+                    clsEmployeeTimeKeeping TimeKeeping = new clsEmployeeTimeKeeping();
+                    TimeKeeping.FingerID = item.FingerID;
+                    TimeKeeping.CardID = item.CardID;
+                    TimeKeeping.EmployeeCode = item.EmployeeCode;
+                    TimeKeeping.EmployeeName = item.EmployeeName;
+                    TimeKeeping.Department = item.Department;
+                    TimeKeeping.EmployeeJob = item.EmployeeJob;
+
+                    txtEmployeeName.Text = TimeKeeping.EmployeeName;
+                    txtEmployeeCode.Text = TimeKeeping.EmployeeCode;
+                    txtDepartMent.Text = TimeKeeping.Department;
+                    txtJob.Text = TimeKeeping.EmployeeJob;
+                    txtName.Text = TimeKeeping.EmployeeName;
+                    txtCode.Text = TimeKeeping.EmployeeCode;
+
+                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
+
+                    DataTable KeepHistory = oBL.GetKeppingHistoryByEmployeeCode(item.EmployeeCode);
+                    if (KeepHistory.Rows.Count > 0)
+                    {
+                        //Nếu đã chấm công vào lớn hơn 5p thì tính là chấm công ra
+                        if ((DateTime.Now - DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString())).TotalMinutes > 3)
+                        {
+                            TimeKeeping.ID = Guid.Parse(KeepHistory.Rows[0]["ID"].ToString());
+                            TimeKeeping.InputTime = DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString());
+                            TimeKeeping.OutputTime = DateTime.Now;
+                            oBL.UpdateHistory(TimeKeeping);
+                            txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
+                            txtOutputTime.Text = TimeKeeping.OutputTime.ToString("HH:mm:ss dd/MM/yyyy");
+                        }
+                        else
+                        {
+                            TimeKeeping.InputTime = DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString());
+                            txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
+                            txtOutputTime.Text = "";
+                        }
+                    }
+                    else
+                    {
+                        //Nếu không có lịch sử chấm công thì thực hiện chấm công vào
+                        TimeKeeping.ID = Guid.NewGuid();
+                        TimeKeeping.InputTime = DateTime.Now;
+                        txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
+
+                        oBL.InsertHistory(TimeKeeping);
+
+                    }
+
+                }
             }
         }
 
@@ -156,20 +235,25 @@ namespace Haui_TimeKeepingSystem
             }
             if (data.Contains("A2"))
             {
+                MessageBox.Show("Vui lòng quẹt thẻ nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            if (data.Contains("A3"))
+            {
                 this.Dispatcher.Invoke(() =>
                 {
                     // Hoàn thành quét vân tay lần 2 ==> Lưu xong vân tay vào arduino
                     wdAddEmployee frm = new wdAddEmployee();
+                    frm.CardID = data.Substring(2, data.Length - 2);
                     frm.FingerID = mFingerID;
                     frm.ShowDialog();
                     mAddEmployee = false;
                     GetallEmployee();
                 });
-            }       
+            }
         }
 
         /// <summary>
-        /// Xử lý khi có người chấm công
+        /// Xử lý khi có người chấm công bằng vân tay
         /// </summary>
         /// <param name="data"></param>
         private void DataAnalys(string data)
@@ -180,6 +264,7 @@ namespace Haui_TimeKeepingSystem
                 {
                     clsEmployeeTimeKeeping TimeKeeping = new clsEmployeeTimeKeeping();
                     TimeKeeping.FingerID = item.FingerID;
+                    TimeKeeping.CardID = item.CardID;
                     TimeKeeping.EmployeeCode = item.EmployeeCode;
                     TimeKeeping.EmployeeName = item.EmployeeName;
                     TimeKeeping.Department = item.Department;

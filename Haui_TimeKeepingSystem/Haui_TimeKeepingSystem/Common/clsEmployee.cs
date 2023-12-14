@@ -9,6 +9,7 @@ namespace Haui_TimeKeepingSystem.Common
     public class clsEmployee
     {
         public string FingerID { get; set; }
+        public string CardID { get; set; }
         public string EmployeeName { get; set; }
         public string EmployeeCode { get; set; }
         public string Department { get; set; }
@@ -20,6 +21,7 @@ namespace Haui_TimeKeepingSystem.Common
     {
         public Guid ID { get; set; }
         public string FingerID { get; set; }
+        public string CardID { get; set; }
         public string EmployeeName { get; set; }
         public string EmployeeCode { get; set; }
         public string Department { get; set; }

@@ -93,6 +93,7 @@ namespace Haui_TimeKeepingSystem.Database
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@ID", item.ID);
                 cmd.Parameters.AddWithValue("@FingerID", item.FingerID);
+                cmd.Parameters.AddWithValue("@CardID", item.CardID);
                 cmd.Parameters.AddWithValue("@EmployeeName", item.EmployeeName);
                 cmd.Parameters.AddWithValue("@EmployeeCode", item.EmployeeCode);
                 cmd.Parameters.AddWithValue("@Department", item.Department);
@@ -221,6 +222,7 @@ namespace Haui_TimeKeepingSystem.Database
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@ID", Guid.NewGuid());
                 cmd.Parameters.AddWithValue("@FingerID", employee.FingerID);
+                cmd.Parameters.AddWithValue("@CardID", employee.CardID);
                 cmd.Parameters.AddWithValue("@EmployeeName", employee.EmployeeName);
                 cmd.Parameters.AddWithValue("@EmployeeCode", employee.EmployeeCode);
                 cmd.Parameters.AddWithValue("@Department", employee.Department);

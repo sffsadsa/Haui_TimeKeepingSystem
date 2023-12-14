@@ -25,8 +25,10 @@ namespace Haui_TimeKeepingSystem
     {
         BLDatabase oBL = new BLDatabase();
         private string mFingerID;
+        private string mCardID;
 
         public string FingerID { get => mFingerID; set => mFingerID = value; }
+        public string CardID { get => mCardID; set => mCardID = value; }
 
         public wdAddEmployee()
         {
@@ -35,27 +37,30 @@ namespace Haui_TimeKeepingSystem
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
+
             txtFingerID.Text = mFingerID;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (ValidateData())
+            this.Dispatcher.Invoke(() =>
             {
-                clsEmployee employee = new clsEmployee();
-                employee.FingerID = txtFingerID.Text;
-                employee.EmployeeName = txtEmployeeName.Text;
-                employee.EmployeeCode = txtEmployeeCode.Text;
-                employee.Department = txtDepartMent.Text;
-                employee.EmployeeJob = txtJob.Text;
-                employee.ImagePath = txtPicturePath.Text;
+                if (ValidateData())
+                {
+                    clsEmployee employee = new clsEmployee();
+                    employee.FingerID = txtFingerID.Text;
+                    employee.CardID = mCardID;
+                    employee.EmployeeName = txtEmployeeName.Text;
+                    employee.EmployeeCode = txtEmployeeCode.Text;
+                    employee.Department = txtDepartMent.Text;
+                    employee.EmployeeJob = txtJob.Text;
+                    employee.ImagePath = txtPicturePath.Text;
 
-                oBL.SaveEmployee(employee);
-                MessageBox.Show("Thêm mới nhân viên hoàn tất.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                this.Close();
-            }
-
+                    oBL.SaveEmployee(employee);
+                    MessageBox.Show("Thêm mới nhân viên hoàn tất.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    this.Close();
+                }
+            });
         }
 
         private bool ValidateData()
@@ -100,7 +105,7 @@ namespace Haui_TimeKeepingSystem
             this.Close();
         }
 
-       
+
         private void btnOpenFile_MouseDown(object sender, MouseButtonEventArgs e)
         {
             string filePath = "";
@@ -113,7 +118,7 @@ namespace Haui_TimeKeepingSystem
             // Nếu mở file và chọn nơi lưu file thành công sẽ lưu đường dẫn lại dùng
             if (dialog.ShowDialog() == true)
             {
-                filePath = dialog.FileName.Replace('\\',',');
+                filePath = dialog.FileName.Replace('\\', ',');
             }
             int x = filePath.Split(',').Length;
             string path = "./" + filePath.Split(',')[x - 2] + "/" + filePath.Split(',')[x - 1];
