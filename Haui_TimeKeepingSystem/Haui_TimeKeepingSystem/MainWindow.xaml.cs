@@ -143,12 +143,28 @@ namespace Haui_TimeKeepingSystem
                 }
                 else if (data.Substring(0, 1) == "f")
                 {
-                    //Chấm công bằng thẻ
-                    this.Dispatcher.Invoke(() =>
+                    if (!mAddEmployee)
+                    {
+                        //Chấm công bằng thẻ
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            data = data.Substring(2, data.Length - 2);
+                            CheckInByCard(data);
+                        });
+                    }
+                    else
                     {
                         data = data.Substring(2, data.Length - 2);
-                        CheckInByCard(data);
-                    });
+                        if (CheckAdminCard(data))
+                        {
+                            MessageBox.Show("Vui lòng đặt tay vào máy quét", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                            mFingerID = oBL.GetNewFingerID();
+                            STM_Input.Write("t");
+                            Thread.Sleep(1000);
+                            STM_Input.Write(mFingerID);
+                        }    
+                        
+                    }
                 }
 
             }
@@ -156,6 +172,17 @@ namespace Haui_TimeKeepingSystem
             {
                 MessageBox.Show(ee.Message);
             }
+        }
+
+        /// <summary>
+        /// Kiểm tra thẻ admin
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private bool CheckAdminCard(string data)
+        {
+            return true;
         }
 
         /// <summary>
@@ -227,12 +254,12 @@ namespace Haui_TimeKeepingSystem
         /// <param name="data"></param>
         private void AddNewEmployee(string data)
         {
-            if (data.Contains("A1"))
-            {
-                // Hoàn thành quét vân tay lần 1
-                MessageBox.Show("Vui lòng xác thực lại vân tay", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            //if (data.Contains("A1"))
+            //{
+            //    // Hoàn thành quét vân tay lần 1
+            //    MessageBox.Show("Vui lòng xác thực lại vân tay", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            }
+            //}
             if (data.Contains("A2"))
             {
                 MessageBox.Show("Vui lòng quẹt thẻ nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -334,11 +361,7 @@ namespace Haui_TimeKeepingSystem
         {
             try
             {
-                MessageBox.Show("Vui lòng đặt tay vào máy quét", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                mFingerID = oBL.GetNewFingerID();
-                STM_Input.Write("t");
-                Thread.Sleep(1000);
-                STM_Input.Write(mFingerID);
+                MessageBox.Show("Vui lòng quẹt thẻ nhân viên của cán bộ quản lý nhân sự", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 mAddEmployee = true;
 
             }
