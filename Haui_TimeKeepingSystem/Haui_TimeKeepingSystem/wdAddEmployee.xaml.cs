@@ -55,6 +55,7 @@ namespace Haui_TimeKeepingSystem
                     employee.Department = txtDepartMent.Text;
                     employee.EmployeeJob = txtJob.Text;
                     employee.ImagePath = txtPicturePath.Text;
+                    employee.Type = "Normal";
 
                     oBL.SaveEmployee(employee);
                     MessageBox.Show("Thêm mới nhân viên hoàn tất.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);

@@ -228,6 +228,7 @@ namespace Haui_TimeKeepingSystem.Database
                 cmd.Parameters.AddWithValue("@Department", employee.Department);
                 cmd.Parameters.AddWithValue("@EmployeeJob", employee.EmployeeJob);
                 cmd.Parameters.AddWithValue("@ImagePath", employee.ImagePath);
+                cmd.Parameters.AddWithValue("@Type", employee.Type);
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }

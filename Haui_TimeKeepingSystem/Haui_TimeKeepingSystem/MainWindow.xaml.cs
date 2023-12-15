@@ -30,6 +30,10 @@ namespace Haui_TimeKeepingSystem
         List<clsEmployee> lstEmployee = new List<clsEmployee>();
         BLDatabase oBL = new BLDatabase();
         private bool mAddEmployee = false;
+        private bool mRemoveEmployee = false;
+        private bool mRemoveAll = false;
+        private bool mAddStep1 = false;
+        private bool mAddStep2 = false;
         private string strConnectFail = "Không thể kết nối tới máy chấm công của bạn. Vui lòng kiểm tra lại!";
         private string mFingerID = string.Empty;
 
@@ -93,6 +97,7 @@ namespace Haui_TimeKeepingSystem
                     employee.Department = dr["Department"].ToString();
                     employee.EmployeeJob = dr["EmployeeJob"].ToString();
                     employee.ImagePath = dr["ImagePath"].ToString();
+                    employee.Type = dr["Type"].ToString();
                     lstEmployee.Add(employee);
                 }
             }
@@ -121,6 +126,29 @@ namespace Haui_TimeKeepingSystem
                 }
                 //data = STM_Input.ReadExisting();
                 data = STM_Input.ReadTo("x");
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    Xulydata(data);
+                });
+
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Thực hiện xử lý data nhận được
+        /// </summary>
+        /// <param name="data"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void Xulydata(string data)
+        {
+            try
+            {
                 if (data.Substring(0, 1) == "i")
                 {
                     data = data.Substring(1, data.Length - 1);
@@ -134,44 +162,112 @@ namespace Haui_TimeKeepingSystem
                     }
                     else
                     {
-                        //thêm nhân viên
-                        this.Dispatcher.Invoke(() =>
+                        if (!mAddStep1)
                         {
-                            AddNewEmployee(data);
-                        });
+                            //data = data.Substring(1, data.Length - 1);
+                            //thêm nhân viên
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                if (CheckAdminFingerID(data))
+                                {
+                                    MessageBox.Show("Vui lòng đặt tay vào máy quét", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                    mFingerID = oBL.GetNewFingerID();
+                                    STM_Input.Write("t" + mFingerID);
+                                    mAddStep1 = true;
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Bạn không có quyền hạn thêm nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                    mAddEmployee = false;
+                                }
+                            });
+                        }
+                        else if (mAddStep1)
+                        {
+                            //AddNewEmployee(data);
+                            if (data.Contains("A2"))
+                            {
+                                MessageBox.Show("Vui lòng quẹt thẻ nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                mAddStep1 = false;
+                                mAddStep2 = true;
+                            }
+
+                        }
                     }
+
                 }
                 else if (data.Substring(0, 1) == "f")
                 {
+                    data = data.Substring(1, data.Length - 1);
                     if (!mAddEmployee)
                     {
                         //Chấm công bằng thẻ
                         this.Dispatcher.Invoke(() =>
-                        {
-                            data = data.Substring(2, data.Length - 2);
+                        {             
                             CheckInByCard(data);
                         });
                     }
                     else
                     {
-                        data = data.Substring(2, data.Length - 2);
-                        if (CheckAdminCard(data))
+                        if ( !mAddStep1 && !mAddStep2)
                         {
-                            MessageBox.Show("Vui lòng đặt tay vào máy quét", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                            mFingerID = oBL.GetNewFingerID();
-                            STM_Input.Write("t");
-                            Thread.Sleep(1000);
-                            STM_Input.Write(mFingerID);
-                        }    
-                        
+                            if (CheckAdminCard(data))
+                            {
+                                MessageBox.Show("Vui lòng đặt tay vào máy quét", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                mFingerID = oBL.GetNewFingerID();
+                                STM_Input.Write("t" + mFingerID);
+
+                                mAddStep1 = true;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Bạn không có quyền hạn thêm nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                mAddEmployee = false;
+                            }
+                        }
+                        else if ( mAddStep2)
+                        {
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                // Hoàn thành quét vân tay lần 2 ==> Lưu xong vân tay vào arduino
+                                wdAddEmployee frm = new wdAddEmployee();
+                                frm.CardID = data;
+                                frm.FingerID = mFingerID;
+                                frm.ShowDialog();
+                                mAddEmployee = false;
+                                mAddStep1 = false;
+                                mAddStep2 = false;
+                                GetallEmployee();
+                            });
+                        }
                     }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Kiểm tra vân tay admin
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private bool CheckAdminFingerID(string data)
+        {
+            bool Result = false;
+            foreach (var item in lstEmployee)
+            {
+                if (item.FingerID == data && item.Type == "Admin")
+                {
+                    Result = true;
+                    break;
                 }
 
             }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.Message);
-            }
+            return Result;
         }
 
         /// <summary>
@@ -182,7 +278,17 @@ namespace Haui_TimeKeepingSystem
         /// <exception cref="NotImplementedException"></exception>
         private bool CheckAdminCard(string data)
         {
-            return true;
+            bool Result = false;
+            foreach (var item in lstEmployee)
+            {
+                if (item.CardID == data && item.Type == "Admin")
+                {
+                    Result = true;
+                    break;
+                }
+
+            }
+            return Result;
         }
 
         /// <summary>
@@ -260,22 +366,10 @@ namespace Haui_TimeKeepingSystem
             //    MessageBox.Show("Vui lòng xác thực lại vân tay", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
             //}
-            if (data.Contains("A2"))
-            {
-                MessageBox.Show("Vui lòng quẹt thẻ nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
+
             if (data.Contains("A3"))
             {
-                this.Dispatcher.Invoke(() =>
-                {
-                    // Hoàn thành quét vân tay lần 2 ==> Lưu xong vân tay vào arduino
-                    wdAddEmployee frm = new wdAddEmployee();
-                    frm.CardID = data.Substring(2, data.Length - 2);
-                    frm.FingerID = mFingerID;
-                    frm.ShowDialog();
-                    mAddEmployee = false;
-                    GetallEmployee();
-                });
+
             }
         }
 

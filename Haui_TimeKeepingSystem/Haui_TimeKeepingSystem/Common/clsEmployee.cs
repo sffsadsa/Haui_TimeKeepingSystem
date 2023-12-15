@@ -15,6 +15,7 @@ namespace Haui_TimeKeepingSystem.Common
         public string Department { get; set; }
         public string EmployeeJob { get; set; }
         public string ImagePath { get; set; }
+        public string Type { get; set; }
     }
 
     public class clsEmployeeTimeKeeping
