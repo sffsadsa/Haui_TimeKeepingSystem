@@ -25,11 +25,12 @@ namespace Haui_TimeKeepingSystem
     /// <summary>
     /// Interaction logic for wdHistory.xaml
     /// </summary>
-    public partial class wdHistory : Window
+    public partial class wdEmployee : Window
     {
         DataTable _dtReport = new DataTable();
         BLDatabase oBL = new BLDatabase();
-        public wdHistory()
+        string _deleteEmployeeID, _deleteEmployeeName, _deleteEmployeeCode;
+        public wdEmployee()
         {
             InitializeComponent();
         }
@@ -37,8 +38,20 @@ namespace Haui_TimeKeepingSystem
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            _dtReport = oBL.GetHistoryForExport();
+            _dtReport = oBL.GetallEmployee();
             grdHistory.ItemsSource = _dtReport.DefaultView;
+        }
+
+        private void grdHistory_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            DataGrid gd = (DataGrid)sender;
+            DataRowView row_selected = gd.SelectedItem as DataRowView;
+            if (row_selected != null)
+            {
+                _deleteEmployeeID = row_selected["FingerID"].ToString();
+                _deleteEmployeeName = row_selected["EmployeeName"].ToString();
+                _deleteEmployeeCode = row_selected["EmployeeCode"].ToString();
+            }
         }
 
         private void btnExportExCell_Click(object sender, RoutedEventArgs e)
@@ -77,7 +90,7 @@ namespace Haui_TimeKeepingSystem
 
                     DataSet ds = new DataSet();
                     ds = _dtReport.DataSet;
-                    strSheetName.Add("Lịch sử chấm công");
+                    strSheetName.Add("Danh sách nhân viên");
 
                     Workbook wbMapping = new Workbook(TemplateFileName);
                     Worksheet wbSheetHistory = wbMapping.Worksheets[0];
@@ -94,10 +107,16 @@ namespace Haui_TimeKeepingSystem
 
         }
 
-        private void btnEmployeeList_Click(object sender, RoutedEventArgs e)
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            wdEmployee frm = new wdEmployee();
-            frm.ShowDialog();
+            if(MessageBox.Show("Bạn có chắc chắn muốn xóa nhân viên" +_deleteEmployeeName + " - "+ _deleteEmployeeCode+ " ?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Information)== MessageBoxResult.Yes)
+            {
+                oBL.DeleteEmployee(_deleteEmployeeID);
+                MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                _dtReport.Clear();
+                _dtReport = oBL.GetallEmployee();
+                grdHistory.ItemsSource = _dtReport.DefaultView;
+            }
         }
     }
 }

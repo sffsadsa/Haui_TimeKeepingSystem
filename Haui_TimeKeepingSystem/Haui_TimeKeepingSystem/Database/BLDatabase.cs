@@ -95,5 +95,11 @@ namespace Haui_TimeKeepingSystem.Database
             string cmd = "Proc_InsertEmployee";
             db.SaveEmployee(cmd, employee);
         }
+
+        public void DeleteEmployee(string fingerID)
+        {
+            string cmd = "Delete Employee Where FingerID = " + fingerID;
+            db.DeleteEmployee(cmd);
+        }
     }
 }

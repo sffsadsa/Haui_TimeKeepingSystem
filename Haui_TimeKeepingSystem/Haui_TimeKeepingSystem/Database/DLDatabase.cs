@@ -237,5 +237,28 @@ namespace Haui_TimeKeepingSystem.Database
 
             }
         }
+
+        internal void DeleteEmployee(string Stored)
+        {
+            try
+            {
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = Stored;
+                cmd.Parameters.Clear();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+
+            }
+            catch (Exception ee)
+            {
+
+            }
+        }
     }
 }

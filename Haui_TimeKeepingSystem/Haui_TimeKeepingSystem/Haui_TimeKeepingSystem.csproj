@@ -105,6 +105,9 @@
     <Compile Include="wdAddEmployee.xaml.cs">
       <DependentUpon>wdAddEmployee.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wdEmployee.xaml.cs">
+      <DependentUpon>wdEmployee.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wdHistory.xaml.cs">
       <DependentUpon>wdHistory.xaml</DependentUpon>
     </Compile>
@@ -123,6 +126,10 @@
     <Page Include="wdAddEmployee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wdEmployee.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="wdHistory.xaml">
       <SubType>Designer</SubType>
