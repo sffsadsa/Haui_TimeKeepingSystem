@@ -34,8 +34,8 @@
             <TextBlock Text="Xuất Excel" FontSize="14" Height="20" Foreground="Black"
                        HorizontalAlignment="Right" Margin="0,3,20,0"
                             MouseDown="btnExportExCell_Click"/>
-            <Button x:Name="btnEmployeeList" Content="Danh sách nhân viên" Width="160" Margin="0,0,-580,0"
-                            Click="btnEmployeeList_Click" />
+            <Button x:Name="btnEmployeeList" Content="Danh sách nhân viên" Width="160" Margin="0,0,130,0"
+                            Click="btnEmployeeList_Click" HorizontalAlignment="Right" />
         </Grid>
     </Grid>
 </Window>

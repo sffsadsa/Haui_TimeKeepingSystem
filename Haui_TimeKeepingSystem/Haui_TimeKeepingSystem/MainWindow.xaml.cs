@@ -47,13 +47,13 @@ namespace Haui_TimeKeepingSystem
             //img_People.Source = new BitmapImage(new Uri("pack://application:,,," + "./Resources/NVA.png")); //"/Images/service.png"
 
             CheckLiensce();
-            STM_Input.Write("c01");
             GetallEmployee();
             try
             {
                 STM_Input.PortName = XINIFILE.ReadValue("COM_STM");
                 STM_Input.BaudRate = int.Parse(XINIFILE.ReadValue("BAURATE"));
                 STM_Input.Open();
+                STM_Input.Write("c01");
                 STM_Input.DataReceived += STM_Input_DataReceived;
             }
             catch (Exception)

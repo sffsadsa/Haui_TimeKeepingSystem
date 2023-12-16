@@ -35,8 +35,8 @@
                        HorizontalAlignment="Right" Margin="0,3,20,0"
                             MouseDown="btnExportExCell_Click"/>
 
-            <Button x:Name="btnDelete" Content="Xóa nhân viên" Width="120" Margin="0,0,-580,0"
-                      Click="btnDelete_Click" />
+            <Button x:Name="btnDelete" Content="Xóa nhân viên" Width="120" Margin="0,0,130,0"
+                      Click="btnDelete_Click" HorizontalAlignment="Right"/>
         </Grid>
     </Grid>
 </Window>
