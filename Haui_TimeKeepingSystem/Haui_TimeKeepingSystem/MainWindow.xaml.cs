@@ -178,6 +178,7 @@ namespace Haui_TimeKeepingSystem
                                 else
                                 {
                                     MessageBox.Show("Bạn không có quyền hạn thêm nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                    STM_Input.Write("c01");
                                     mAddEmployee = false;
                                 }
                             });
@@ -222,6 +223,7 @@ namespace Haui_TimeKeepingSystem
                             else
                             {
                                 MessageBox.Show("Bạn không có quyền hạn thêm nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                STM_Input.Write("c01");
                                 mAddEmployee = false;
                             }
                         }
@@ -319,6 +321,9 @@ namespace Haui_TimeKeepingSystem
 
                     img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
 
+                    string cmd = "if" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
+                    STM_Input.Write(cmd);
+
                     DataTable KeepHistory = oBL.GetKeppingHistoryByEmployeeCode(item.EmployeeCode);
                     if (KeepHistory.Rows.Count > 0)
                     {
@@ -399,6 +404,9 @@ namespace Haui_TimeKeepingSystem
                     txtCode.Text = TimeKeeping.EmployeeCode;
 
                     img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
+
+                    string cmd = "if" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
+                    STM_Input.Write(cmd);
 
                     DataTable KeepHistory = oBL.GetKeppingHistoryByEmployeeCode(item.EmployeeCode);
                     if (KeepHistory.Rows.Count > 0)
