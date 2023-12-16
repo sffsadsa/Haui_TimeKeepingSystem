@@ -111,7 +111,7 @@ namespace Haui_TimeKeepingSystem
         {
             if(MessageBox.Show("Bạn có chắc chắn muốn xóa nhân viên" +_deleteEmployeeName + " - "+ _deleteEmployeeCode+ " ?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Information)== MessageBoxResult.Yes)
             {
-                oBL.DeleteEmployee(_deleteEmployeeID);
+                oBL.DeleteEmployee(int.Parse(_deleteEmployeeID));
                 MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 _dtReport.Clear();
                 _dtReport = oBL.GetallEmployee();

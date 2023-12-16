@@ -47,6 +47,7 @@ namespace Haui_TimeKeepingSystem
             //img_People.Source = new BitmapImage(new Uri("pack://application:,,," + "./Resources/NVA.png")); //"/Images/service.png"
 
             CheckLiensce();
+            STM_Input.Write("c01");
             GetallEmployee();
             try
             {
@@ -452,6 +453,7 @@ namespace Haui_TimeKeepingSystem
         {
             wdHistory frm = new wdHistory();
             frm.ShowDialog();
+            GetallEmployee();
         }
 
         /// <summary>

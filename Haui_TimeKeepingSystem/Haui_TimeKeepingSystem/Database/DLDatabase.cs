@@ -238,7 +238,7 @@ namespace Haui_TimeKeepingSystem.Database
             }
         }
 
-        internal void DeleteEmployee(string Stored)
+        public void DeleteEmployee(string Stored, int fingerID)
         {
             try
             {
@@ -251,6 +251,7 @@ namespace Haui_TimeKeepingSystem.Database
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = Stored;
                 cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@FingerID", fingerID);
                 cmd.ExecuteNonQuery();
                 conn.Close();
 
