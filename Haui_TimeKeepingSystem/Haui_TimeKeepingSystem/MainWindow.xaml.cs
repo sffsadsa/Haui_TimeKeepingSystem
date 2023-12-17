@@ -131,6 +131,14 @@ namespace Haui_TimeKeepingSystem
                 this.Dispatcher.Invoke(() =>
                 {
                     Xulydata(data);
+                    txtEmployeeName.Text = "";
+                    txtEmployeeCode.Text = "";
+                    txtDepartMent.Text = "";
+                    txtJob.Text = "";
+                    txtName.Text = "";
+                    txtCode.Text = "";
+                    txtInputTime.Text = "";
+                    txtOutputTime.Text = "";
                 });
 
             }
@@ -322,7 +330,7 @@ namespace Haui_TimeKeepingSystem
 
                     img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
 
-                    string cmd = "if" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
+                    string cmd = "i" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
                     STM_Input.Write(cmd);
 
                     DataTable KeepHistory = oBL.GetKeppingHistoryByEmployeeCode(item.EmployeeCode);
@@ -406,7 +414,7 @@ namespace Haui_TimeKeepingSystem
 
                     img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
 
-                    string cmd = "if" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
+                    string cmd = "i" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
                     STM_Input.Write(cmd);
 
                     DataTable KeepHistory = oBL.GetKeppingHistoryByEmployeeCode(item.EmployeeCode);
