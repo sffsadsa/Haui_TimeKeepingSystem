@@ -89,7 +89,6 @@ namespace Haui_TimeKeepingSystem.Database
         /// Thực hiện lưu thông tin nhân viên mới
         /// </summary>
         /// <param name="employee"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void SaveEmployee(clsEmployee employee)
         {
             string cmd = "Proc_InsertEmployee";
@@ -100,6 +99,18 @@ namespace Haui_TimeKeepingSystem.Database
         {
             string cmd = "Proc_DeleteEmployee";
             db.DeleteEmployee(cmd, fingerID);
+        }
+
+        public string GetCurrentPassWord()
+        {
+            string cmd = "SELECT * FROM PassWordManagerment";
+            string PW = db.GetCurrentPassWord(cmd);
+            return PW;
+        }
+
+        internal void UpdatePassWord()
+        {
+            throw new NotImplementedException();
         }
     }
 }
