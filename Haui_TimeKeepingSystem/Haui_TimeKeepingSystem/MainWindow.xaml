@@ -75,8 +75,8 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="1">
                     <StackPanel>
-                        <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
-                                                   Text="Tên nhân viên (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+                        <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,50,0,0" 
+                                                   Text="Họ và tên (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
 
                         <TextBox x:Name="txtEmployeeName" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                                                   VerticalAlignment="Top"  Height="40" Width="400"
@@ -120,14 +120,6 @@
                                                  VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Giờ vào"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
 
-                        <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
-                                                   Text="Giờ ra (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
-
-                        <TextBox x:Name="txtOutputTime" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                                                  VerticalAlignment="Top" Height="40" Width="400" 
-                                                  AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
-                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Giờ ra"
-                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
                     </StackPanel>
                 </Grid>
             </Grid>

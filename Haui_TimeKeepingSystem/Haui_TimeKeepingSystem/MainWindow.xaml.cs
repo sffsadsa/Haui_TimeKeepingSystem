@@ -137,7 +137,6 @@ namespace Haui_TimeKeepingSystem
                     txtName.Text = "";
                     txtCode.Text = "";
                     txtInputTime.Text = "";
-                    txtOutputTime.Text = "";
 
                     Xulydata(data);
                 });
@@ -274,63 +273,15 @@ namespace Haui_TimeKeepingSystem
         {
             if (oBL.GetCurrentPassWord() == data)
             {
-                //clsEmployeeTimeKeeping TimeKeeping = new clsEmployeeTimeKeeping();
-                //TimeKeeping.FingerID = item.FingerID;
-                //TimeKeeping.CardID = item.CardID;
-                //TimeKeeping.EmployeeCode = item.EmployeeCode;
-                //TimeKeeping.EmployeeName = item.EmployeeName;
-                //TimeKeeping.Department = item.Department;
-                //TimeKeeping.EmployeeJob = item.EmployeeJob;
-
-                //txtEmployeeName.Text = TimeKeeping.EmployeeName;
-                //txtEmployeeCode.Text = TimeKeeping.EmployeeCode;
-                //txtDepartMent.Text = TimeKeeping.Department;
-                //txtJob.Text = TimeKeeping.EmployeeJob;
-                //txtName.Text = TimeKeeping.EmployeeName;
-                //txtCode.Text = TimeKeeping.EmployeeCode;
-
-                //img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
-
-                //string cmd = "i" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
-                //STM_Input.Write(cmd);
-
-                //DataTable KeepHistory = oBL.GetKeppingHistoryByEmployeeCode(item.EmployeeCode);
-                //if (KeepHistory.Rows.Count > 0)
-                //{
-                //    //Nếu đã chấm công vào lớn hơn 5p thì tính là chấm công ra
-                //    if ((DateTime.Now - DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString())).TotalMinutes > 3)
-                //    {
-                //        TimeKeeping.ID = Guid.Parse(KeepHistory.Rows[0]["ID"].ToString());
-                //        TimeKeeping.InputTime = DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString());
-                //        TimeKeeping.OutputTime = DateTime.Now;
-                //        oBL.UpdateHistory(TimeKeeping);
-                //        txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                //        txtOutputTime.Text = TimeKeeping.OutputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                //    }
-                //    else
-                //    {
-                //        TimeKeeping.InputTime = DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString());
-                //        txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                //        txtOutputTime.Text = "";
-                //    }
-                //}
-                //else
-                //{
-                //    //Nếu không có lịch sử chấm công thì thực hiện chấm công vào
-                //    TimeKeeping.ID = Guid.NewGuid();
-                //    TimeKeeping.InputTime = DateTime.Now;
-                //    txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
-
-                //    oBL.InsertHistory(TimeKeeping);
-
-                //}
+                txtEmployeeName.Text = "Guest";
+                txtEmployeeCode.Text = "Guest";
 
                 OpenDoor();
             }
             else
             {
                 MessageBox.Show("Sai mật khẩu. Vui lòng kiểm tra lại", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-            }    
+            }
         }
 
         /// <summary>
@@ -407,41 +358,17 @@ namespace Haui_TimeKeepingSystem
                     txtName.Text = TimeKeeping.EmployeeName;
                     txtCode.Text = TimeKeeping.EmployeeCode;
 
-                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + "/Resources/NVA.png"));
+                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath == string.Empty ? "/Resources/NVA.png" : item.ImagePath));
 
                     string cmd = "i" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
-                    STM_Input.Write(cmd);
+                    //STM_Input.Write(cmd);
 
-                    DataTable KeepHistory = oBL.GetKeppingHistoryByEmployeeCode(item.EmployeeCode);
-                    if (KeepHistory.Rows.Count > 0)
-                    {
-                        //Nếu đã chấm công vào lớn hơn 5p thì tính là chấm công ra
-                        if ((DateTime.Now - DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString())).TotalMinutes > 3)
-                        {
-                            TimeKeeping.ID = Guid.Parse(KeepHistory.Rows[0]["ID"].ToString());
-                            TimeKeeping.InputTime = DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString());
-                            TimeKeeping.OutputTime = DateTime.Now;
-                            oBL.UpdateHistory(TimeKeeping);
-                            txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                            txtOutputTime.Text = TimeKeeping.OutputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                        }
-                        else
-                        {
-                            TimeKeeping.InputTime = DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString());
-                            txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                            txtOutputTime.Text = "";
-                        }
-                    }
-                    else
-                    {
-                        //Nếu không có lịch sử chấm công thì thực hiện chấm công vào
-                        TimeKeeping.ID = Guid.NewGuid();
-                        TimeKeeping.InputTime = DateTime.Now;
-                        txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
+                    //Nếu không có lịch sử chấm công thì thực hiện chấm công vào
+                    TimeKeeping.ID = Guid.NewGuid();
+                    TimeKeeping.InputTime = DateTime.Now;
+                    txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
 
-                        oBL.InsertHistory(TimeKeeping);
-
-                    }
+                    oBL.InsertHistory(TimeKeeping);
 
                     OpenDoor();
                 }
@@ -495,39 +422,16 @@ namespace Haui_TimeKeepingSystem
                     img_People.Source = new BitmapImage(new Uri("pack://application:,,," + "/Resources/NVA.png"));
 
                     string cmd = "i" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
-                    STM_Input.Write(cmd);
+                    //STM_Input.Write(cmd);
 
                     DataTable KeepHistory = oBL.GetKeppingHistoryByEmployeeCode(item.EmployeeCode);
-                    if (KeepHistory.Rows.Count > 0)
-                    {
-                        //Nếu đã chấm công vào lớn hơn 5p thì tính là chấm công ra
-                        if ((DateTime.Now - DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString())).TotalMinutes > 3)
-                        {
-                            TimeKeeping.ID = Guid.Parse(KeepHistory.Rows[0]["ID"].ToString());
-                            TimeKeeping.InputTime = DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString());
-                            TimeKeeping.OutputTime = DateTime.Now;
-                            oBL.UpdateHistory(TimeKeeping);
-                            txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                            txtOutputTime.Text = TimeKeeping.OutputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                        }
-                        else
-                        {
-                            TimeKeeping.InputTime = DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString());
-                            txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                            txtOutputTime.Text = "";
-                        }
-                    }
-                    else
-                    {
-                        //Nếu không có lịch sử chấm công thì thực hiện chấm công vào
-                        TimeKeeping.ID = Guid.NewGuid();
-                        TimeKeeping.InputTime = DateTime.Now;
-                        txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
 
-                        oBL.InsertHistory(TimeKeeping);
+                    //Nếu không có lịch sử chấm công thì thực hiện chấm công vào
+                    TimeKeeping.ID = Guid.NewGuid();
+                    TimeKeeping.InputTime = DateTime.Now;
+                    txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
 
-                    }
-
+                    oBL.InsertHistory(TimeKeeping);
                     OpenDoor();
 
                 }
