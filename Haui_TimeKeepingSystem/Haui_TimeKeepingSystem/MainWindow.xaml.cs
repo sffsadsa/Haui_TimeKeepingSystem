@@ -276,6 +276,22 @@ namespace Haui_TimeKeepingSystem
                 txtEmployeeName.Text = "Guest";
                 txtEmployeeCode.Text = "Guest";
 
+                clsEmployeeTimeKeeping TimeKeeping = new clsEmployeeTimeKeeping();
+                TimeKeeping.FingerID = "";
+                TimeKeeping.CardID = "";
+                TimeKeeping.EmployeeCode = "Guest";
+                TimeKeeping.EmployeeName = "Guest";
+                TimeKeeping.Department = "";
+                TimeKeeping.EmployeeJob = "";
+
+                //Nếu không có lịch sử chấm công thì thực hiện chấm công vào
+                TimeKeeping.ID = Guid.NewGuid();
+                TimeKeeping.InputTime = DateTime.Now;
+                txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
+                img_People.Source = new BitmapImage(new Uri("pack://application:,,," + "/Resources/NVA.png"));
+
+                oBL.InsertHistory(TimeKeeping);
+
                 OpenDoor();
             }
             else
@@ -358,7 +374,7 @@ namespace Haui_TimeKeepingSystem
                     txtName.Text = TimeKeeping.EmployeeName;
                     txtCode.Text = TimeKeeping.EmployeeCode;
 
-                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath == string.Empty ? "/Resources/NVA.png" : item.ImagePath));
+                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + "/Resources/NVA.png" ));
 
                     string cmd = "i" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
                     //STM_Input.Write(cmd);

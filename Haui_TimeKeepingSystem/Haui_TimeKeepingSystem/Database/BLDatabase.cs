@@ -1,5 +1,6 @@
 ﻿using Haui_TimeKeepingSystem.Common;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using static iTextSharp.text.pdf.AcroFields;
 
 namespace Haui_TimeKeepingSystem.Database
@@ -108,9 +110,10 @@ namespace Haui_TimeKeepingSystem.Database
             return PW;
         }
 
-        internal void UpdatePassWord()
+        public void UpdatePassWord(string PassWord)
         {
-            throw new NotImplementedException();
+            string cmd = "Update PassWordManagerment Set PassWord = @PassWord";
+            db.UpdatePassWord(cmd, PassWord);
         }
     }
 }

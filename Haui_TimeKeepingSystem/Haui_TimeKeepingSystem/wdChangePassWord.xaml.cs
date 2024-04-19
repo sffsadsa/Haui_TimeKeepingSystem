@@ -43,7 +43,7 @@ namespace Haui_TimeKeepingSystem
             {
                 if (ValidateData())
                 {
-                    oBL.UpdatePassWord();
+                    oBL.UpdatePassWord(txtNewPassWord.Password);
                     MessageBox.Show("Đổi mật khẩu thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
                 }           
