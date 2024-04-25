@@ -164,10 +164,9 @@ namespace Haui_TimeKeepingSystem
                     if (!mAddEmployee)
                     {
                         //chấm công bẳng vân tay
-                        this.Dispatcher.Invoke(() =>
-                        {
-                            DataAnalys(data);
-                        });
+
+                        DataAnalys(data);
+
                     }
                     else
                     {
@@ -212,14 +211,13 @@ namespace Haui_TimeKeepingSystem
                     if (!mAddEmployee)
                     {
                         //Chấm công bằng thẻ
-                        this.Dispatcher.Invoke(() =>
-                        {             
-                            CheckInByCard(data);
-                        });
+
+                        CheckInByCard(data);
+
                     }
                     else
                     {
-                        if ( !mAddStep1 && !mAddStep2)
+                        if (!mAddStep1 && !mAddStep2)
                         {
                             if (CheckAdminCard(data))
                             {
@@ -236,7 +234,7 @@ namespace Haui_TimeKeepingSystem
                                 mAddEmployee = false;
                             }
                         }
-                        else if ( mAddStep2)
+                        else if (mAddStep2)
                         {
                             this.Dispatcher.Invoke(() =>
                             {
@@ -328,7 +326,7 @@ namespace Haui_TimeKeepingSystem
                     txtName.Text = TimeKeeping.EmployeeName;
                     txtCode.Text = TimeKeeping.EmployeeCode;
 
-                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
+                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + "./Resources/NVA.png"));
 
                     string cmd = "i" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
                     STM_Input.Write(cmd);
@@ -412,7 +410,7 @@ namespace Haui_TimeKeepingSystem
                     txtName.Text = TimeKeeping.EmployeeName;
                     txtCode.Text = TimeKeeping.EmployeeCode;
 
-                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
+                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + "./Resources/NVA.png")); //"/Images/service.png"
 
                     string cmd = "i" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
                     STM_Input.Write(cmd);
