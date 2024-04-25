@@ -64,7 +64,7 @@ namespace Haui_TimeKeepingSystem
 
         private void CheckLiensce()
         {
-            DateTime LiesnceDate = new DateTime(2024, 02, 15, 23, 59, 59);
+            DateTime LiesnceDate = new DateTime(2025, 02, 15, 23, 59, 59);
             DateTime dateTime = DateTime.Now;
 
             int x = (dateTime - LiesnceDate).Days;
@@ -363,7 +363,7 @@ namespace Haui_TimeKeepingSystem
                         oBL.InsertHistory(TimeKeeping);
 
                     }
-
+                    OpenBuzzer();
                 }
             }
         }
@@ -448,8 +448,15 @@ namespace Haui_TimeKeepingSystem
 
                     }
 
+                    OpenBuzzer();
+
                 }
             }
+        }
+
+        private void OpenBuzzer()
+        {
+            STM_Input.Write("b01");
         }
 
         /// <summary>
