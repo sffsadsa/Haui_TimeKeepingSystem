@@ -64,7 +64,7 @@ namespace Haui_TimeKeepingSystem
 
         private void CheckLiensce()
         {
-            DateTime LiesnceDate = new DateTime(2025, 02, 15, 23, 59, 59);
+            DateTime LiesnceDate = new DateTime(2025, 12, 15, 23, 59, 59);
             DateTime dateTime = DateTime.Now;
 
             int x = (dateTime - LiesnceDate).Days;
@@ -158,6 +158,7 @@ namespace Haui_TimeKeepingSystem
         {
             try
             {
+                data = data.Trim();
                 if (data.Substring(0, 1) == "i")
                 {
                     data = data.Substring(1, data.Length - 1);
@@ -177,9 +178,7 @@ namespace Haui_TimeKeepingSystem
                             {
                                 MessageBox.Show("Vui lòng đặt tay vào máy quét", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                                 mFingerID = oBL.GetNewFingerID();
-                                STM_Input.Write("t");
-                                Thread.Sleep(1000);
-                                STM_Input.Write(mFingerID);
+                                STM_Input.Write("t" + mFingerID);
                                 mAddStep1 = true;
                             }
                             else
@@ -195,9 +194,20 @@ namespace Haui_TimeKeepingSystem
                             AddNewEmployee(data);
                             if (data.Contains("A2"))
                             {
-                                MessageBox.Show("Vui lòng quẹt thẻ nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                //MessageBox.Show("Vui lòng quẹt thẻ nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                                 mAddStep1 = false;
                                 mAddStep2 = true;
+
+                                // Hoàn thành quét vân tay lần 2 ==> Lưu xong vân tay vào arduino (Nếu có dùng thẻ thì bỏ đoạn này đi)
+                                wdAddEmployee frm = new wdAddEmployee();
+                                frm.CardID = "No Card";
+                                frm.FingerID = mFingerID;
+                                frm.ShowDialog();
+                                mAddEmployee = false;
+                                mAddStep1 = false;
+                                mAddStep2 = false;
+                                GetallEmployee();
+
                             }
 
                         }
@@ -374,7 +384,7 @@ namespace Haui_TimeKeepingSystem
                     txtName.Text = TimeKeeping.EmployeeName;
                     txtCode.Text = TimeKeeping.EmployeeCode;
 
-                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + "/Resources/NVA.png" ));
+                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + "/Resources/NVA.png"));
 
                     string cmd = "i" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
                     //STM_Input.Write(cmd);
@@ -475,7 +485,7 @@ namespace Haui_TimeKeepingSystem
         {
             try
             {
-                MessageBox.Show("Vui lòng quẹt thẻ nhân viên của cán bộ quản lý nhân sự", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Vui lòng xác nhận vân tay chủ nhà", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 mAddEmployee = true;
 
             }
