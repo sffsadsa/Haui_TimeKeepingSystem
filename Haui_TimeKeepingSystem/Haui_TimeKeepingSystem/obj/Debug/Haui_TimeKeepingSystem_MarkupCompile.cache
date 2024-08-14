@@ -10,11 +10,19 @@ none
 false
 DEBUG;TRACE
 D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\App.xaml
+<<<<<<< HEAD
 4-2083524049
 
 12682585469
 27-907471550
 MainWindow.xaml;wdAddEmployee.xaml;wdEmployee.xaml;wdHistory.xaml;
+=======
+5-1703694233
+
+131497360653
+27-907471550
+MainWindow.xaml;wdAddEmployee.xaml;wdChangePassWord.xaml;wdEmployee.xaml;wdHistory.xaml;
+>>>>>>> 1206f63c0b19f74dd0c0bd75bc5fee05fb774109
 
 False
 

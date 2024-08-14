@@ -1,6 +1,8 @@
 ﻿using Haui_TimeKeepingSystem.Common;
+using iTextSharp.text.rtf.table;
 using Org.BouncyCastle.Cms;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -9,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using static iTextSharp.text.pdf.AcroFields;
 
 namespace Haui_TimeKeepingSystem.Database
@@ -170,7 +173,6 @@ namespace Haui_TimeKeepingSystem.Database
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public string GetNewFingerID(string sqlCommand)
         {
             DataTable dt = new DataTable();
@@ -259,6 +261,47 @@ namespace Haui_TimeKeepingSystem.Database
             catch (Exception ee)
             {
 
+            }
+        }
+
+        public string GetCurrentPassWord(string sqlCommand)
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+                da = new SqlDataAdapter(sqlCommand, conn);
+                da.Fill(dt);
+                conn.Close();
+
+            }
+            catch (Exception ee)
+            {
+
+            }
+            if (dt.Rows.Count > 0)
+            {
+                return dt.Rows[0]["PassWord"].ToString();
+            }
+            else
+            {
+                return "0";
+            }
+        }
+
+        public void UpdatePassWord(string query, string passWord)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@PassWord", passWord);
+                command.ExecuteNonQuery();
+                connection.Close();
             }
         }
     }

@@ -130,7 +130,6 @@ namespace Haui_TimeKeepingSystem
 
                 this.Dispatcher.Invoke(() =>
                 {
-                    Xulydata(data);
                     txtEmployeeName.Text = "";
                     txtEmployeeCode.Text = "";
                     txtDepartMent.Text = "";
@@ -138,7 +137,8 @@ namespace Haui_TimeKeepingSystem
                     txtName.Text = "";
                     txtCode.Text = "";
                     txtInputTime.Text = "";
-                    txtOutputTime.Text = "";
+
+                    Xulydata(data);
                 });
 
             }
@@ -158,15 +158,17 @@ namespace Haui_TimeKeepingSystem
         {
             try
             {
+                data = data.Trim();
                 if (data.Substring(0, 1) == "i")
                 {
                     data = data.Substring(1, data.Length - 1);
                     if (!mAddEmployee)
                     {
                         //chấm công bẳng vân tay
-
-                        DataAnalys(data);
-
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            DataAnalys(data);
+                        });
                     }
                     else
                     {
@@ -174,31 +176,41 @@ namespace Haui_TimeKeepingSystem
                         {
                             //data = data.Substring(1, data.Length - 1);
                             //thêm nhân viên
-                            this.Dispatcher.Invoke(() =>
+
+                            if (CheckAdminFingerID(data))
                             {
-                                if (CheckAdminFingerID(data))
-                                {
-                                    MessageBox.Show("Vui lòng đặt tay vào máy quét", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                                    mFingerID = oBL.GetNewFingerID();
-                                    STM_Input.Write("t" + mFingerID);
-                                    mAddStep1 = true;
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Bạn không có quyền hạn thêm nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                                    STM_Input.Write("c01");
-                                    mAddEmployee = false;
-                                }
-                            });
+                                MessageBox.Show("Vui lòng đặt tay vào máy quét", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                mFingerID = oBL.GetNewFingerID();
+                                STM_Input.Write("t" + mFingerID);
+                                mAddStep1 = true;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Bạn không có quyền hạn thêm nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                STM_Input.Write("c01");
+                                mAddEmployee = false;
+                            }
+
                         }
                         else if (mAddStep1)
                         {
-                            //AddNewEmployee(data);
+                            AddNewEmployee(data);
                             if (data.Contains("A2"))
                             {
-                                MessageBox.Show("Vui lòng quẹt thẻ nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                //MessageBox.Show("Vui lòng quẹt thẻ nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                                 mAddStep1 = false;
                                 mAddStep2 = true;
+
+                                // Hoàn thành quét vân tay lần 2 ==> Lưu xong vân tay vào arduino (Nếu có dùng thẻ thì bỏ đoạn này đi)
+                                wdAddEmployee frm = new wdAddEmployee();
+                                frm.CardID = "No Card";
+                                frm.FingerID = mFingerID;
+                                frm.ShowDialog();
+                                mAddEmployee = false;
+                                mAddStep1 = false;
+                                mAddStep2 = false;
+                                GetallEmployee();
+
                             }
 
                         }
@@ -211,9 +223,10 @@ namespace Haui_TimeKeepingSystem
                     if (!mAddEmployee)
                     {
                         //Chấm công bằng thẻ
-
-                        CheckInByCard(data);
-
+                        this.Dispatcher.Invoke(() =>
+                        {             
+                            CheckInByCard(data);
+                        });
                     }
                     else
                     {
@@ -236,29 +249,80 @@ namespace Haui_TimeKeepingSystem
                         }
                         else if (mAddStep2)
                         {
-                            this.Dispatcher.Invoke(() =>
-                            {
-                                // Hoàn thành quét vân tay lần 2 ==> Lưu xong vân tay vào arduino
-                                wdAddEmployee frm = new wdAddEmployee();
-                                frm.CardID = data;
-                                frm.FingerID = mFingerID;
-                                frm.ShowDialog();
-                                mAddEmployee = false;
-                                mAddStep1 = false;
-                                mAddStep2 = false;
-                                GetallEmployee();
-                            });
+
+                            // Hoàn thành quét vân tay lần 2 ==> Lưu xong vân tay vào arduino
+                            wdAddEmployee frm = new wdAddEmployee();
+                            frm.CardID = data;
+                            frm.FingerID = mFingerID;
+                            frm.ShowDialog();
+                            mAddEmployee = false;
+                            mAddStep1 = false;
+                            mAddStep2 = false;
+                            GetallEmployee();
+
                         }
                     }
                 }
+                else if (data.Substring(0, 1) == "p")
+                {
+                    data = data.Substring(1, data.Length - 1);
+                    if (!mAddEmployee)
+                    {
+                        //Chấm công bằng mật khẩu                       
+                        CheckInByPassWord(data);
+                    }
+                }
             }
-            catch (Exception)
+            catch (Exception ee)
             {
 
-                throw;
+                MessageBox.Show(ee.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
             }
         }
 
+        /// <summary>
+        /// Chấm công bằng mật khẩu
+        /// </summary>
+        /// <param name="data"></param>
+        private void CheckInByPassWord(string data)
+        {
+            if (oBL.GetCurrentPassWord() == data)
+            {
+                txtEmployeeName.Text = "Guest";
+                txtEmployeeCode.Text = "Guest";
+
+                clsEmployeeTimeKeeping TimeKeeping = new clsEmployeeTimeKeeping();
+                TimeKeeping.FingerID = "";
+                TimeKeeping.CardID = "";
+                TimeKeeping.EmployeeCode = "Guest";
+                TimeKeeping.EmployeeName = "Guest";
+                TimeKeeping.Department = "";
+                TimeKeeping.EmployeeJob = "";
+
+                //Nếu không có lịch sử chấm công thì thực hiện chấm công vào
+                TimeKeeping.ID = Guid.NewGuid();
+                TimeKeeping.InputTime = DateTime.Now;
+                txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
+                img_People.Source = new BitmapImage(new Uri("pack://application:,,," + "/Resources/NVA.png"));
+
+                oBL.InsertHistory(TimeKeeping);
+
+                OpenDoor();
+            }
+            else
+            {
+                MessageBox.Show("Sai mật khẩu. Vui lòng kiểm tra lại", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        /// <summary>
+        /// Mở cửa
+        /// </summary>
+        private void OpenDoor()
+        {
+            STM_Input.Write("m");
+        }
         /// <summary>
         /// Kiểm tra vân tay admin
         /// </summary>
@@ -326,42 +390,20 @@ namespace Haui_TimeKeepingSystem
                     txtName.Text = TimeKeeping.EmployeeName;
                     txtCode.Text = TimeKeeping.EmployeeCode;
 
-                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + "./Resources/NVA.png"));
+                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
 
                     string cmd = "i" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
-                    STM_Input.Write(cmd);
+                    //STM_Input.Write(cmd);
 
-                    DataTable KeepHistory = oBL.GetKeppingHistoryByEmployeeCode(item.EmployeeCode);
-                    if (KeepHistory.Rows.Count > 0)
-                    {
-                        //Nếu đã chấm công vào lớn hơn 5p thì tính là chấm công ra
-                        if ((DateTime.Now - DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString())).TotalMinutes > 3)
-                        {
-                            TimeKeeping.ID = Guid.Parse(KeepHistory.Rows[0]["ID"].ToString());
-                            TimeKeeping.InputTime = DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString());
-                            TimeKeeping.OutputTime = DateTime.Now;
-                            oBL.UpdateHistory(TimeKeeping);
-                            txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                            txtOutputTime.Text = TimeKeeping.OutputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                        }
-                        else
-                        {
-                            TimeKeeping.InputTime = DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString());
-                            txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                            txtOutputTime.Text = "";
-                        }
-                    }
-                    else
-                    {
-                        //Nếu không có lịch sử chấm công thì thực hiện chấm công vào
-                        TimeKeeping.ID = Guid.NewGuid();
-                        TimeKeeping.InputTime = DateTime.Now;
-                        txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
+                    //Nếu không có lịch sử chấm công thì thực hiện chấm công vào
+                    TimeKeeping.ID = Guid.NewGuid();
+                    TimeKeeping.InputTime = DateTime.Now;
+                    txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
 
-                        oBL.InsertHistory(TimeKeeping);
+                    oBL.InsertHistory(TimeKeeping);
 
                     }
-                    OpenBuzzer();
+
                 }
             }
         }
@@ -372,12 +414,12 @@ namespace Haui_TimeKeepingSystem
         /// <param name="data"></param>
         private void AddNewEmployee(string data)
         {
-            //if (data.Contains("A1"))
-            //{
-            //    // Hoàn thành quét vân tay lần 1
-            //    MessageBox.Show("Vui lòng xác thực lại vân tay", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (data.Contains("A1"))
+            {
+                // Hoàn thành quét vân tay lần 1
+                MessageBox.Show("Vui lòng xác thực lại vân tay", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            //}
+            }
 
             if (data.Contains("A3"))
             {
@@ -410,41 +452,20 @@ namespace Haui_TimeKeepingSystem
                     txtName.Text = TimeKeeping.EmployeeName;
                     txtCode.Text = TimeKeeping.EmployeeCode;
 
-                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + "./Resources/NVA.png")); //"/Images/service.png"
+                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
 
                     string cmd = "i" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
-                    STM_Input.Write(cmd);
+                    //STM_Input.Write(cmd);
 
                     DataTable KeepHistory = oBL.GetKeppingHistoryByEmployeeCode(item.EmployeeCode);
-                    if (KeepHistory.Rows.Count > 0)
-                    {
-                        //Nếu đã chấm công vào lớn hơn 5p thì tính là chấm công ra
-                        if ((DateTime.Now - DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString())).TotalMinutes > 3)
-                        {
-                            TimeKeeping.ID = Guid.Parse(KeepHistory.Rows[0]["ID"].ToString());
-                            TimeKeeping.InputTime = DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString());
-                            TimeKeeping.OutputTime = DateTime.Now;
-                            oBL.UpdateHistory(TimeKeeping);
-                            txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                            txtOutputTime.Text = TimeKeeping.OutputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                        }
-                        else
-                        {
-                            TimeKeeping.InputTime = DateTime.Parse(KeepHistory.Rows[0]["InputTime"].ToString());
-                            txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                            txtOutputTime.Text = "";
-                        }
-                    }
-                    else
-                    {
-                        //Nếu không có lịch sử chấm công thì thực hiện chấm công vào
-                        TimeKeeping.ID = Guid.NewGuid();
-                        TimeKeeping.InputTime = DateTime.Now;
-                        txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
 
-                        oBL.InsertHistory(TimeKeeping);
+                    //Nếu không có lịch sử chấm công thì thực hiện chấm công vào
+                    TimeKeeping.ID = Guid.NewGuid();
+                    TimeKeeping.InputTime = DateTime.Now;
+                    txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
 
-                    }
+                    oBL.InsertHistory(TimeKeeping);
+                    OpenDoor();
 
                     OpenBuzzer();
 
@@ -478,7 +499,7 @@ namespace Haui_TimeKeepingSystem
         {
             try
             {
-                MessageBox.Show("Vui lòng quẹt thẻ nhân viên của cán bộ quản lý nhân sự", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Vui lòng xác nhận vân tay chủ nhà", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 mAddEmployee = true;
 
             }
@@ -488,6 +509,12 @@ namespace Haui_TimeKeepingSystem
                 MessageBox.Show(ee.ToString());
             }
 
+        }
+
+        private void btnChangePass_Click(object sender, RoutedEventArgs e)
+        {
+            wdChangePassWord frm = new wdChangePassWord();
+            frm.ShowDialog();
         }
     }
 }

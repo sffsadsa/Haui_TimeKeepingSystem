@@ -14,7 +14,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"  
         mc:Ignorable="d"
         Loaded="Window_Loaded" WindowStartupLocation="CenterScreen"
-        Title="Hệ thống quản lý chấm công" Height="680" Width="900">
+        Title="Hệ thống quản lý vào ra" Height="680" Width="900">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -34,7 +34,7 @@
                     <RowDefinition Height="0.3*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <TextBlock Text="HÌNH ẢNH NHÂN VIÊN" 
+                    <TextBlock Text="HÌNH ẢNH" 
                                FontWeight="Bold"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
@@ -75,8 +75,8 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="1">
                     <StackPanel>
-                        <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
-                                                   Text="Tên nhân viên (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+                        <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,50,0,0" 
+                                                   Text="Họ và tên (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
 
                         <TextBox x:Name="txtEmployeeName" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                                                   VerticalAlignment="Top"  Height="40" Width="400"
@@ -120,27 +120,25 @@
                                                  VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Giờ vào"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
 
-                        <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
-                                                   Text="Giờ ra (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
-
-                        <TextBox x:Name="txtOutputTime" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                                                  VerticalAlignment="Top" Height="40" Width="400" 
-                                                  AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
-                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Giờ ra"
-                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
                     </StackPanel>
                 </Grid>
             </Grid>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="12.5*"/>
                     <ColumnDefinition Width="6.5*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="6.5*"/>
+                    <ColumnDefinition Width="0.25*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="2">
+                <Grid Grid.Column="3">
                     <Button x:Name="btnAddEmployee" Content="Thêm nhân viên"  HorizontalAlignment="Right"
                         Width="130" Click="btnAddEmployee_Click"/>
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    <Button x:Name="btnChangePass" Content="Đổi mật khẩu"  HorizontalAlignment="Right"
+                    Width="120" Click="btnChangePass_Click"/>
                 </Grid>
 
                 <Grid Grid.Column="1">

@@ -30,7 +30,7 @@
             <Grid Grid.Column="1">
                 <StackPanel>
                     <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
-                                                   Text="Tên nhân viên (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+                                                   Text="Họ và tên (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
 
                     <TextBox x:Name="txtEmployeeName" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                                                   VerticalAlignment="Top"  Height="40" Width="450"
@@ -68,7 +68,7 @@
                     <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
                                                    Text="Hình ảnh (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
 
-                    <TextBox x:Name="txtPicturePath" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    <TextBox x:Name="txtPicturePath" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="15,0,0,0" 
                                                   VerticalAlignment="Top" Height="40" Width="415" Text="./Resources/NVA.png"
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Left"
                                                  VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Hình ảnh nhân viên"

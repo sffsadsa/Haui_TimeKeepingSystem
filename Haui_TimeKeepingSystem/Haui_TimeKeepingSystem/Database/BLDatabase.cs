@@ -1,5 +1,6 @@
 ﻿using Haui_TimeKeepingSystem.Common;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using static iTextSharp.text.pdf.AcroFields;
 
 namespace Haui_TimeKeepingSystem.Database
@@ -89,7 +91,6 @@ namespace Haui_TimeKeepingSystem.Database
         /// Thực hiện lưu thông tin nhân viên mới
         /// </summary>
         /// <param name="employee"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void SaveEmployee(clsEmployee employee)
         {
             string cmd = "Proc_InsertEmployee";
@@ -100,6 +101,19 @@ namespace Haui_TimeKeepingSystem.Database
         {
             string cmd = "Proc_DeleteEmployee";
             db.DeleteEmployee(cmd, fingerID);
+        }
+
+        public string GetCurrentPassWord()
+        {
+            string cmd = "SELECT * FROM PassWordManagerment";
+            string PW = db.GetCurrentPassWord(cmd);
+            return PW;
+        }
+
+        public void UpdatePassWord(string PassWord)
+        {
+            string cmd = "Update PassWordManagerment Set PassWord = @PassWord";
+            db.UpdatePassWord(cmd, PassWord);
         }
     }
 }

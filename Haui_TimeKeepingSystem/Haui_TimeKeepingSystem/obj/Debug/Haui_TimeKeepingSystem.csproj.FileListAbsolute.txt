@@ -40,6 +40,10 @@ D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\bin\Debug\Mi
 D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\Haui_TimeKeepingSystem.csproj.AssemblyReference.cache
 D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\MainWindow.g.cs
 D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\wdAddEmployee.g.cs
+<<<<<<< HEAD
+=======
+D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\wdChangePassWord.g.cs
+>>>>>>> 1206f63c0b19f74dd0c0bd75bc5fee05fb774109
 D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\wdEmployee.g.cs
 D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\wdHistory.g.cs
 D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\App.g.cs
@@ -48,6 +52,10 @@ D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\Ha
 D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\App.baml
 D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\MainWindow.baml
 D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\wdAddEmployee.baml
+<<<<<<< HEAD
+=======
+D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\wdChangePassWord.baml
+>>>>>>> 1206f63c0b19f74dd0c0bd75bc5fee05fb774109
 D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\wdEmployee.baml
 D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\wdHistory.baml
 D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\Haui_TimeKeepingSystem.g.resources
