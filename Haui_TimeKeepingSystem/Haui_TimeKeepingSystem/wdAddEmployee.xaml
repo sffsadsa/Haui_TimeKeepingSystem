@@ -14,13 +14,17 @@
         FontFamily="{DynamicResource MaterialDesignFont}"  
         mc:Ignorable="d" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen" WindowStyle="None"
-        Title="Thêm nhân viên" Height="680" Width="510">
+        Title="Thêm nhân viên" Height="710" Width="525">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.3*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <TextBlock Text="KHAI BÁO THÔNG TIN NGƯỜI DÙNG" FontWeight="Bold" FontSize="24"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
@@ -35,34 +39,34 @@
                     <TextBox x:Name="txtEmployeeName" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                                                   VerticalAlignment="Top"  Height="40" Width="450"
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
-                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Tên nhân viên"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Tên người dùng"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
 
                     <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
-                                                   Text="Mã nhân viên (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+                                                   Text="Mã người dùng (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
 
                     <TextBox x:Name="txtEmployeeCode" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                                                   VerticalAlignment="Top" Height="40" Width="450" 
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
-                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Mã nhân viên"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Mã người dùng"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
 
                     <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
-                                                   Text="Bộ phận (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+                                                   Text="Số phòng (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
 
                     <TextBox x:Name="txtDepartMent" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                                                   VerticalAlignment="Top" Height="40" Width="450" 
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
-                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Bộ phận"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Số phòng"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
 
                     <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
-                                                   Text="Vị trí công việc (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+                                                   Text="Quan hệ với chủ nhà (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
 
                     <TextBox x:Name="txtJob" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                                                   VerticalAlignment="Top"  Height="40" Width="450" 
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
-                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Vị trí công việc"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Quan hệ với chủ nhà"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
 
                     <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
@@ -71,11 +75,11 @@
                     <TextBox x:Name="txtPicturePath" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="15,0,0,0" 
                                                   VerticalAlignment="Top" Height="40" Width="415" Text="./Resources/NVA.png"
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Left"
-                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Hình ảnh nhân viên"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Hình ảnh người dùng"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
 
                     <md:PackIcon x:Name="btnOpenFile" Kind="MenuOpen" Width="35" Height="30" VerticalAlignment="Center"
-                                         Margin="420,-40,0,0" MouseDown="btnOpenFile_MouseDown"/>
+                                         Margin="435,-40,0,0" MouseDown="btnOpenFile_MouseDown"/>
 
                     <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
                                                    Text="Mã số vân tay (*)" HorizontalAlignment="Left" FontWeight="Bold"/>

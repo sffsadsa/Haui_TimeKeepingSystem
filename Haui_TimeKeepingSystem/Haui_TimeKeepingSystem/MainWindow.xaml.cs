@@ -2,6 +2,7 @@
 using Haui_TimeKeepingSystem.Database;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.IO.Ports;
 using System.Linq;
@@ -36,10 +37,12 @@ namespace Haui_TimeKeepingSystem
         private bool mAddStep2 = false;
         private string strConnectFail = "Không thể kết nối tới máy chấm công của bạn. Vui lòng kiểm tra lại!";
         private string mFingerID = string.Empty;
+        private int mError = 0;
 
         public MainWindow()
         {
             InitializeComponent();
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -53,7 +56,7 @@ namespace Haui_TimeKeepingSystem
                 STM_Input.PortName = XINIFILE.ReadValue("COM_STM");
                 STM_Input.BaudRate = int.Parse(XINIFILE.ReadValue("BAURATE"));
                 STM_Input.Open();
-                STM_Input.Write("c01");
+                //STM_Input.Write("c01");
                 STM_Input.DataReceived += STM_Input_DataReceived;
             }
             catch (Exception)
@@ -92,7 +95,7 @@ namespace Haui_TimeKeepingSystem
                 {
                     clsEmployee employee = new clsEmployee();
                     employee.FingerID = dr["FingerID"].ToString();
-                    employee.CardID = dr["CardID"].ToString();
+                    //employee.CardID = dr["CardID"].ToString();
                     employee.EmployeeName = dr["EmployeeName"].ToString();
                     employee.EmployeeCode = dr["EmployeeCode"].ToString();
                     employee.Department = dr["Department"].ToString();
@@ -187,7 +190,7 @@ namespace Haui_TimeKeepingSystem
                             else
                             {
                                 MessageBox.Show("Bạn không có quyền hạn thêm nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                                STM_Input.Write("c01");
+                                //STM_Input.Write("c01");
                                 mAddEmployee = false;
                             }
 
@@ -224,7 +227,7 @@ namespace Haui_TimeKeepingSystem
                     {
                         //Chấm công bằng thẻ
                         this.Dispatcher.Invoke(() =>
-                        {             
+                        {
                             CheckInByCard(data);
                         });
                     }
@@ -243,7 +246,7 @@ namespace Haui_TimeKeepingSystem
                             else
                             {
                                 MessageBox.Show("Bạn không có quyền hạn thêm nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                                STM_Input.Write("c01");
+                                //STM_Input.Write("c01");
                                 mAddEmployee = false;
                             }
                         }
@@ -272,12 +275,35 @@ namespace Haui_TimeKeepingSystem
                         CheckInByPassWord(data);
                     }
                 }
+
+                if (data.Contains("A4"))
+                {
+                    mError++;
+                    WarningFinger();
+                }
             }
             catch (Exception ee)
             {
 
                 MessageBox.Show(ee.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
 
+            }
+        }
+
+        private void WarningFinger()
+        {
+            try
+            {
+                MessageBox.Show("Vân tay vừa nhập không có sẵn, Vui lòng kiểm tra lại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (mError >= 5)
+                {
+                    STM_Input.Write("c");
+                }    
+            }
+            catch (Exception ee)
+            {
+
+                MessageBox.Show(ee.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -309,10 +335,17 @@ namespace Haui_TimeKeepingSystem
                 oBL.InsertHistory(TimeKeeping);
 
                 OpenDoor();
+                mError = 0;
+                
             }
             else
             {
                 MessageBox.Show("Sai mật khẩu. Vui lòng kiểm tra lại", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                mError++;
+                if (mError >= 5)
+                {
+                    STM_Input.Write("c");
+                }
             }
         }
 
@@ -390,7 +423,7 @@ namespace Haui_TimeKeepingSystem
                     txtName.Text = TimeKeeping.EmployeeName;
                     txtCode.Text = TimeKeeping.EmployeeCode;
 
-                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
+                    //img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
 
                     string cmd = "i" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
                     //STM_Input.Write(cmd);
@@ -402,11 +435,11 @@ namespace Haui_TimeKeepingSystem
 
                     oBL.InsertHistory(TimeKeeping);
 
-                    }
-
                 }
+
             }
         }
+
 
         /// <summary>
         /// Thực hiện các bước thêm vân tay nhân viên mới
@@ -433,6 +466,7 @@ namespace Haui_TimeKeepingSystem
         /// <param name="data"></param>
         private void DataAnalys(string data)
         {
+            bool check = false;
             foreach (var item in lstEmployee)
             {
                 if (item.FingerID == data)
@@ -466,11 +500,18 @@ namespace Haui_TimeKeepingSystem
 
                     oBL.InsertHistory(TimeKeeping);
                     OpenDoor();
-
+                    mError = 0;
                     OpenBuzzer();
-
+                    check = true;
+           
                 }
             }
+            if (!check)
+            {
+                mError++;
+                WarningFinger();
+            }    
+          
         }
 
         private void OpenBuzzer()

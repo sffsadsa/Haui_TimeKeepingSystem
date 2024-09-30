@@ -73,29 +73,29 @@ namespace Haui_TimeKeepingSystem
                 MessageBox.Show(string.Format(strMess, "Mã vân tay"), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
-            if (txtEmployeeName.Text == string.Empty || txtEmployeeName.Text == "")
+            if (txtEmployeeName.Text == string.Empty || txtEmployeeName.Text == "Tên người dùng")
             {
-                MessageBox.Show(string.Format(strMess, "Tên nhân viên"), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(string.Format(strMess, "Tên người dùng"), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
-            if (txtEmployeeCode.Text == string.Empty || txtEmployeeCode.Text == "")
+            if (txtEmployeeCode.Text == string.Empty || txtEmployeeCode.Text == "Mã người dùng")
             {
-                MessageBox.Show(string.Format(strMess, "Mã nhân viên"), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(string.Format(strMess, "Mã người dùng"), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
-            if (txtDepartMent.Text == string.Empty || txtDepartMent.Text == "")
+            if (txtDepartMent.Text == string.Empty || txtDepartMent.Text == "Số phòng")
+            {
+                MessageBox.Show(string.Format(strMess, "Số phòng"), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            if (txtJob.Text == string.Empty || txtJob.Text == "Quan hệ với chủ nhà")
             {
                 MessageBox.Show(string.Format(strMess, "Bộ phận"), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
-            if (txtJob.Text == string.Empty || txtJob.Text == "Vị trí công việc")
+            if (txtPicturePath.Text == string.Empty || txtPicturePath.Text == "Hình ảnh người dùng")
             {
-                MessageBox.Show(string.Format(strMess, "Bộ phận"), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return false;
-            }
-            if (txtPicturePath.Text == string.Empty || txtPicturePath.Text == "Vị trí công việc")
-            {
-                MessageBox.Show(string.Format(strMess, "Hình ảnh nhân viên"), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(string.Format(strMess, "Hình ảnh người dùng"), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             return Result;

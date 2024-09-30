@@ -81,34 +81,34 @@
                         <TextBox x:Name="txtEmployeeName" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                                                   VerticalAlignment="Top"  Height="40" Width="400"
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
-                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Tên nhân viên"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Tên người dùng"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
 
                         <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
-                                                   Text="Mã nhân viên (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+                                                   Text="Mã người dùng (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
 
                         <TextBox x:Name="txtEmployeeCode" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                                                   VerticalAlignment="Top" Height="40" Width="400" 
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
-                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Mã nhân viên"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Mã người dùng"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
 
                         <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
-                                                   Text="Bộ phận (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+                                                   Text="Số phòng (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
 
                         <TextBox x:Name="txtDepartMent" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                                                   VerticalAlignment="Top" Height="40" Width="400" 
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
-                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Bộ phận"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Số phòng"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
 
                         <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
-                                                   Text="Vị trí công việc (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+                                                   Text="Quan hệ với chủ nhà (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
 
                         <TextBox x:Name="txtJob" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                                                   VerticalAlignment="Top"  Height="40" Width="400" 
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
-                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Vị trí công việc"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Quan hệ với chủ nhà"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
 
                         <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
