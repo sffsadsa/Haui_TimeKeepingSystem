@@ -29,7 +29,7 @@ namespace Haui_TimeKeepingSystem
     {
         DataTable _dtReport = new DataTable();
         BLDatabase oBL = new BLDatabase();
-        string _deleteEmployeeID, _deleteEmployeeName, _deleteEmployeeCode;
+        string _deleteEmployeeID, _deleteEmployeeName, _deleteEmployeeCode,_employeeType;
         public wdEmployee()
         {
             InitializeComponent();
@@ -48,9 +48,11 @@ namespace Haui_TimeKeepingSystem
             DataRowView row_selected = gd.SelectedItem as DataRowView;
             if (row_selected != null)
             {
-                _deleteEmployeeID = row_selected["FingerID"].ToString();
+                _deleteEmployeeID = row_selected["CardID"].ToString();
+                //_deleteEmployeeID = row_selected["FingerID"].ToString();
                 _deleteEmployeeName = row_selected["EmployeeName"].ToString();
                 _deleteEmployeeCode = row_selected["EmployeeCode"].ToString();
+                _employeeType = row_selected["Type"].ToString();
             }
         }
 
@@ -109,14 +111,22 @@ namespace Haui_TimeKeepingSystem
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if(MessageBox.Show("Bạn có chắc chắn muốn xóa nhân viên" +_deleteEmployeeName + " - "+ _deleteEmployeeCode+ " ?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Information)== MessageBoxResult.Yes)
+            if (_employeeType != "Admin")
             {
-                oBL.DeleteEmployee(int.Parse(_deleteEmployeeID));
-                MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                _dtReport.Clear();
-                _dtReport = oBL.GetallEmployee();
-                grdHistory.ItemsSource = _dtReport.DefaultView;
+                if (MessageBox.Show("Bạn có chắc chắn muốn xóa nhân viên" + _deleteEmployeeName + " - " + _deleteEmployeeCode + " ?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+                {
+                    //oBL.DeleteEmployee(int.Parse(_deleteEmployeeID));//xóa bằng mã vân tay
+                    oBL.DeleteEmployeeByCard(_deleteEmployeeID);
+                    MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    _dtReport.Clear();
+                    _dtReport = oBL.GetallEmployee();
+                    grdHistory.ItemsSource = _dtReport.DefaultView;
+                }
             }
+            else
+                MessageBox.Show(_deleteEmployeeName + " là chủ nhà. Không thể xóa");
+
+
         }
     }
 }

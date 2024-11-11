@@ -38,7 +38,7 @@ namespace Haui_TimeKeepingSystem
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            txtFingerID.Text = mFingerID;
+            txtFingerID.Text = mCardID;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -58,7 +58,8 @@ namespace Haui_TimeKeepingSystem
                     employee.Type = "Normal";
 
                     oBL.SaveEmployee(employee);
-                    MessageBox.Show("Thêm mới nhân viên hoàn tất.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Thêm mới người dùng hoàn tất.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    this.DialogResult = true;
                     this.Close();
                 }
             });
@@ -70,7 +71,7 @@ namespace Haui_TimeKeepingSystem
             bool Result = true;
             if (txtFingerID.Text == string.Empty || txtFingerID.Text == "")
             {
-                MessageBox.Show(string.Format(strMess, "Mã vân tay"), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(string.Format(strMess, "Mã thẻ từ"), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             if (txtEmployeeName.Text == string.Empty || txtEmployeeName.Text == "Tên người dùng")
@@ -103,6 +104,7 @@ namespace Haui_TimeKeepingSystem
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = false;
             this.Close();
         }
 

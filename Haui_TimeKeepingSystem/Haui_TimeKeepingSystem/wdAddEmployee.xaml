@@ -82,12 +82,12 @@
                                          Margin="435,-40,0,0" MouseDown="btnOpenFile_MouseDown"/>
 
                     <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
-                                                   Text="Mã số vân tay (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+                                                   Text="Mã thẻ từ (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
 
                     <TextBox x:Name="txtFingerID" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                                                   VerticalAlignment="Top"  Height="40" Width="450" 
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
-                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Mã số vân tay" IsEnabled="False" />
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Mã thẻ từ" IsEnabled="False" />
 
                     
                 </StackPanel>

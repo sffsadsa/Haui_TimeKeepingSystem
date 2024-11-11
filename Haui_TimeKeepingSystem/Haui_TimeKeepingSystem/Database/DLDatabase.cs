@@ -95,7 +95,7 @@ namespace Haui_TimeKeepingSystem.Database
                 cmd.CommandText = Stored;
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@ID", item.ID);
-                cmd.Parameters.AddWithValue("@FingerID", item.FingerID);
+                cmd.Parameters.AddWithValue("@FingerID", 0); // nếu có vân tay thì sửa lại
                 cmd.Parameters.AddWithValue("@CardID", item.CardID);
                 cmd.Parameters.AddWithValue("@EmployeeName", item.EmployeeName);
                 cmd.Parameters.AddWithValue("@EmployeeCode", item.EmployeeCode);
@@ -264,6 +264,31 @@ namespace Haui_TimeKeepingSystem.Database
             }
         }
 
+
+        public void DeleteEmployeeByCard(string Stored, string cardID)
+        {
+            try
+            {
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = Stored;
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@CardID", cardID);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+
+            }
+            catch (Exception ee)
+            {
+
+            }
+        }
+
         public string GetCurrentPassWord(string sqlCommand)
         {
             DataTable dt = new DataTable();
@@ -304,5 +329,6 @@ namespace Haui_TimeKeepingSystem.Database
                 connection.Close();
             }
         }
+
     }
 }

@@ -132,7 +132,7 @@
                     <ColumnDefinition Width="0.25*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="3">
-                    <Button x:Name="btnAddEmployee" Content="Thêm nhân viên"  HorizontalAlignment="Right"
+                    <Button x:Name="btnAddEmployee" Content="Thêm người"  HorizontalAlignment="Right"
                         Width="130" Click="btnAddEmployee_Click"/>
                 </Grid>
 

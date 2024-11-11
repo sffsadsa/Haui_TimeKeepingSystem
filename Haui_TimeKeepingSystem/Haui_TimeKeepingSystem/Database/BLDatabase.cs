@@ -1,4 +1,5 @@
 ﻿using Haui_TimeKeepingSystem.Common;
+using Org.BouncyCastle.Cms;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -103,6 +104,12 @@ namespace Haui_TimeKeepingSystem.Database
             db.DeleteEmployee(cmd, fingerID);
         }
 
+        public void DeleteEmployeeByCard(string CardID)
+        {
+            string cmd = "Proc_DeleteEmployeeByCard";
+            db.DeleteEmployeeByCard(cmd, CardID);
+        }
+
         public string GetCurrentPassWord()
         {
             string cmd = "SELECT * FROM PassWordManagerment";
@@ -115,5 +122,6 @@ namespace Haui_TimeKeepingSystem.Database
             string cmd = "Update PassWordManagerment Set PassWord = @PassWord";
             db.UpdatePassWord(cmd, PassWord);
         }
+
     }
 }

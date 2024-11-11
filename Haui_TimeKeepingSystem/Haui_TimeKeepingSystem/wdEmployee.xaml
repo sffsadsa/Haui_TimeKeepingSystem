@@ -22,7 +22,7 @@
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="1">
-            <DataGrid x:Name="grdHistory" SelectedCellsChanged="grdHistory_SelectedCellsChanged"/>
+            <DataGrid x:Name="grdHistory" IsReadOnly="True" SelectedCellsChanged="grdHistory_SelectedCellsChanged"/>
         </Grid>
         <Grid Grid.Row="2">
             <Button x:Name="btnExportExCell" Width="110" 
@@ -35,7 +35,7 @@
                        HorizontalAlignment="Right" Margin="0,3,20,0"
                             MouseDown="btnExportExCell_Click"/>
 
-            <Button x:Name="btnDelete" Content="Xóa nhân viên" Width="120" Margin="0,0,130,0"
+            <Button x:Name="btnDelete" Content="Xóa thành viên" Width="120" Margin="0,0,130,0"
                       Click="btnDelete_Click" HorizontalAlignment="Right"/>
         </Grid>
     </Grid>

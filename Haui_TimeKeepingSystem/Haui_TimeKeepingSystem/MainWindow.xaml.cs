@@ -94,8 +94,8 @@ namespace Haui_TimeKeepingSystem
                 foreach (DataRow dr in dt.Rows)
                 {
                     clsEmployee employee = new clsEmployee();
-                    employee.FingerID = dr["FingerID"].ToString();
-                    //employee.CardID = dr["CardID"].ToString();
+                    //employee.FingerID = dr["FingerID"].ToString();
+                    employee.CardID = dr["CardID"].ToString();
                     employee.EmployeeName = dr["EmployeeName"].ToString();
                     employee.EmployeeCode = dr["EmployeeCode"].ToString();
                     employee.Department = dr["Department"].ToString();
@@ -237,16 +237,17 @@ namespace Haui_TimeKeepingSystem
                         {
                             if (CheckAdminCard(data))
                             {
-                                MessageBox.Show("Vui lòng đặt tay vào máy quét", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                                mFingerID = oBL.GetNewFingerID();
-                                STM_Input.Write("t" + mFingerID);
+                                MessageBox.Show("Vui lòng quẹt thẻ của bạn", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                //mFingerID = oBL.GetNewFingerID();
+                                //STM_Input.Write("t" + mFingerID);
 
                                 mAddStep1 = true;
+                                mAddStep2 = true;// nêu sử udnjg vân tay thì xóa dòng này đi
                             }
                             else
                             {
                                 MessageBox.Show("Bạn không có quyền hạn thêm nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                                //STM_Input.Write("c01");
+                                STM_Input.Write("c01");
                                 mAddEmployee = false;
                             }
                         }
@@ -258,11 +259,22 @@ namespace Haui_TimeKeepingSystem
                             frm.CardID = data;
                             frm.FingerID = mFingerID;
                             frm.ShowDialog();
-                            mAddEmployee = false;
-                            mAddStep1 = false;
-                            mAddStep2 = false;
-                            GetallEmployee();
-
+                            if (frm.DialogResult==true)
+                            {
+                                mAddEmployee = false;
+                                mAddStep1 = false;
+                                mAddStep2 = false;
+                                GetallEmployee();
+                                STM_Input.Write("b");
+                            }    
+                            else
+                            {
+                                mAddEmployee = false;
+                                mAddStep1 = false;
+                                mAddStep2 = false;
+                                STM_Input.Write("c");
+                            }    
+                                
                         }
                     }
                 }
@@ -298,7 +310,7 @@ namespace Haui_TimeKeepingSystem
                 if (mError >= 5)
                 {
                     STM_Input.Write("c");
-                }    
+                }
             }
             catch (Exception ee)
             {
@@ -324,7 +336,7 @@ namespace Haui_TimeKeepingSystem
                 TimeKeeping.EmployeeCode = "Guest";
                 TimeKeeping.EmployeeName = "Guest";
                 TimeKeeping.Department = "";
-                TimeKeeping.EmployeeJob = "";
+                TimeKeeping.EmployeeJob = "Khách";
 
                 //Nếu không có lịch sử chấm công thì thực hiện chấm công vào
                 TimeKeeping.ID = Guid.NewGuid();
@@ -335,17 +347,14 @@ namespace Haui_TimeKeepingSystem
                 oBL.InsertHistory(TimeKeeping);
 
                 OpenDoor();
-                mError = 0;
-                
+
             }
             else
             {
+                STM_Input.Write("d");
                 MessageBox.Show("Sai mật khẩu. Vui lòng kiểm tra lại", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                mError++;
-                if (mError >= 5)
-                {
-                    STM_Input.Write("c");
-                }
+
+    
             }
         }
 
@@ -401,9 +410,9 @@ namespace Haui_TimeKeepingSystem
         /// nhân viên chấm công bằng thẻ RF
         /// </summary>
         /// <param name="data"></param>
-        /// <exception cref="NotImplementedException"></exception>
         private void CheckInByCard(string data)
         {
+            bool Result = false;
             foreach (var item in lstEmployee)
             {
                 if (item.CardID == data)
@@ -423,7 +432,7 @@ namespace Haui_TimeKeepingSystem
                     txtName.Text = TimeKeeping.EmployeeName;
                     txtCode.Text = TimeKeeping.EmployeeCode;
 
-                    //img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
+                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
 
                     string cmd = "i" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
                     //STM_Input.Write(cmd);
@@ -434,9 +443,15 @@ namespace Haui_TimeKeepingSystem
                     txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
 
                     oBL.InsertHistory(TimeKeeping);
-
+                    OpenDoor();
+                    Result = true;
                 }
 
+            }
+            if (!Result)
+            {
+                STM_Input.Write("a");
+                MessageBox.Show("Thẻ chưa được khai báo. Vui lòng kiểm tra lại", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -500,18 +515,16 @@ namespace Haui_TimeKeepingSystem
 
                     oBL.InsertHistory(TimeKeeping);
                     OpenDoor();
-                    mError = 0;
-                    OpenBuzzer();
                     check = true;
-           
+
                 }
             }
             if (!check)
             {
                 mError++;
                 WarningFinger();
-            }    
-          
+            }
+
         }
 
         private void OpenBuzzer()
@@ -540,7 +553,15 @@ namespace Haui_TimeKeepingSystem
         {
             try
             {
-                MessageBox.Show("Vui lòng xác nhận vân tay chủ nhà", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                txtEmployeeName.Text = "";
+                txtEmployeeCode.Text = "";
+                txtDepartMent.Text = "";
+                txtJob.Text = "";
+                txtName.Text = "";
+                txtCode.Text = "";
+                txtInputTime.Text = "";
+
+                MessageBox.Show("Vui lòng xác nhận quyền chủ nhà", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 mAddEmployee = true;
 
             }
