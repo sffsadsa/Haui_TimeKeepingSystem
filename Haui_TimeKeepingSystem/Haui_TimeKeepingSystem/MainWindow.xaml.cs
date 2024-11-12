@@ -42,7 +42,10 @@ namespace Haui_TimeKeepingSystem
         public MainWindow()
         {
             InitializeComponent();
-
+            
+            Color color = Color.FromRgb(222, 236, 249); 
+            SolidColorBrush brush = new SolidColorBrush(color);
+            this.Background = brush;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -94,7 +97,7 @@ namespace Haui_TimeKeepingSystem
                 foreach (DataRow dr in dt.Rows)
                 {
                     clsEmployee employee = new clsEmployee();
-                    //employee.FingerID = dr["FingerID"].ToString();
+                    employee.FingerID = dr["FingerID"].ToString();
                     employee.CardID = dr["CardID"].ToString();
                     employee.EmployeeName = dr["EmployeeName"].ToString();
                     employee.EmployeeCode = dr["EmployeeCode"].ToString();
@@ -200,19 +203,19 @@ namespace Haui_TimeKeepingSystem
                             AddNewEmployee(data);
                             if (data.Contains("A2"))
                             {
-                                //MessageBox.Show("Vui lòng quẹt thẻ nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                MessageBox.Show("Vui lòng quẹt thẻ nhân viên", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                                 mAddStep1 = false;
                                 mAddStep2 = true;
 
-                                // Hoàn thành quét vân tay lần 2 ==> Lưu xong vân tay vào arduino (Nếu có dùng thẻ thì bỏ đoạn này đi)
-                                wdAddEmployee frm = new wdAddEmployee();
-                                frm.CardID = "No Card";
-                                frm.FingerID = mFingerID;
-                                frm.ShowDialog();
-                                mAddEmployee = false;
-                                mAddStep1 = false;
-                                mAddStep2 = false;
-                                GetallEmployee();
+                                //// Hoàn thành quét vân tay lần 2 ==> Lưu xong vân tay vào arduino (Nếu có dùng thẻ thì bỏ đoạn này đi)
+                                //wdAddEmployee frm = new wdAddEmployee();
+                                //frm.CardID = "No Card";
+                                //frm.FingerID = mFingerID;
+                                //frm.ShowDialog();
+                                //mAddEmployee = false;
+                                //mAddStep1 = false;
+                                //mAddStep2 = false;
+                                //GetallEmployee();
 
                             }
 
@@ -237,12 +240,12 @@ namespace Haui_TimeKeepingSystem
                         {
                             if (CheckAdminCard(data))
                             {
-                                MessageBox.Show("Vui lòng quẹt thẻ của bạn", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                                //mFingerID = oBL.GetNewFingerID();
-                                //STM_Input.Write("t" + mFingerID);
+                                MessageBox.Show("Vui lòng đặt tay vào máy quét", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                mFingerID = oBL.GetNewFingerID();
+                                STM_Input.Write("t" + mFingerID);
 
                                 mAddStep1 = true;
-                                mAddStep2 = true;// nêu sử udnjg vân tay thì xóa dòng này đi
+                                //mAddStep2 = true;// nêu sử udnjg vân tay thì xóa dòng này đi
                             }
                             else
                             {
