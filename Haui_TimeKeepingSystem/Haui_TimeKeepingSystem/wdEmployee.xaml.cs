@@ -49,7 +49,7 @@ namespace Haui_TimeKeepingSystem
             if (row_selected != null)
             {
                 _deleteEmployeeID = row_selected["CardID"].ToString();
-                //_deleteEmployeeID = row_selected["FingerID"].ToString();
+                _deleteEmployeeID = row_selected["FingerID"].ToString();
                 _deleteEmployeeName = row_selected["EmployeeName"].ToString();
                 _deleteEmployeeCode = row_selected["EmployeeCode"].ToString();
                 _employeeType = row_selected["Type"].ToString();
@@ -113,7 +113,7 @@ namespace Haui_TimeKeepingSystem
         {
             if (_employeeType != "Admin")
             {
-                if (MessageBox.Show("Bạn có chắc chắn muốn xóa nhân viên" + _deleteEmployeeName + " - " + _deleteEmployeeCode + " ?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Bạn có chắc chắn muốn xóa người dùng " + _deleteEmployeeName + " - " + _deleteEmployeeCode + " ?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                 {
                     //oBL.DeleteEmployee(int.Parse(_deleteEmployeeID));//xóa bằng mã vân tay
                     oBL.DeleteEmployeeByCard(_deleteEmployeeID);
