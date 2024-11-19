@@ -95,7 +95,7 @@ namespace Haui_TimeKeepingSystem.Database
                 cmd.CommandText = Stored;
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@ID", item.ID);
-                cmd.Parameters.AddWithValue("@FingerID", 0); // nếu có vân tay thì sửa lại
+                cmd.Parameters.AddWithValue("@FingerID", item.FingerID); // nếu có vân tay thì sửa lại
                 cmd.Parameters.AddWithValue("@CardID", item.CardID);
                 cmd.Parameters.AddWithValue("@EmployeeName", item.EmployeeName);
                 cmd.Parameters.AddWithValue("@EmployeeCode", item.EmployeeCode);
@@ -330,5 +330,17 @@ namespace Haui_TimeKeepingSystem.Database
             }
         }
 
+        public void DeleteHistory(string sqlCommand)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(sqlCommand, connection);
+                command.ExecuteNonQuery();
+
+                connection.Close();
+            }
+        }
     }
 }

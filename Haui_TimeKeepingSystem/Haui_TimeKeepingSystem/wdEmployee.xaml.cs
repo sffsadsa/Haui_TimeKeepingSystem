@@ -115,8 +115,8 @@ namespace Haui_TimeKeepingSystem
             {
                 if (MessageBox.Show("Bạn có chắc chắn muốn xóa người dùng " + _deleteEmployeeName + " - " + _deleteEmployeeCode + " ?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                 {
-                    //oBL.DeleteEmployee(int.Parse(_deleteEmployeeID));//xóa bằng mã vân tay
-                    oBL.DeleteEmployeeByCard(_deleteEmployeeID);
+                    oBL.DeleteEmployee(int.Parse(_deleteEmployeeID));//xóa bằng mã vân tay
+                    //oBL.DeleteEmployeeByCard(_deleteEmployeeID);
                     MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                     _dtReport.Clear();
                     _dtReport = oBL.GetallEmployee();

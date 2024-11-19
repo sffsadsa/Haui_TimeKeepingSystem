@@ -38,7 +38,8 @@ namespace Haui_TimeKeepingSystem
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            txtFingerID.Text = mCardID;
+            txtCardID.Text = mCardID;
+            txtFingerID.Text = mFingerID;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

@@ -99,6 +99,15 @@ namespace Haui_TimeKeepingSystem
             wdEmployee frm = new wdEmployee();
             frm.ShowDialog();
         }
+
+        private void btnDeleteHistory_Click(object sender, RoutedEventArgs e)
+        {
+            oBL.DeleteHistory();
+            MessageBox.Show("Xóa lịch sử thành công");
+
+            _dtReport = oBL.GetHistoryForExport();
+            grdHistory.ItemsSource = _dtReport.DefaultView;
+        }
     }
 }
 

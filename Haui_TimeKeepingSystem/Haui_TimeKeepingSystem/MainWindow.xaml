@@ -22,13 +22,27 @@
             <RowDefinition Height="6.5*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="White">
-            <Image Source=".\Resources\Logo_UTC.png" VerticalAlignment="Center" 
-                   HorizontalAlignment="Left"
-                   Margin="50,0,0,0"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1.5*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Image Source=".\Resources\Logo_UTC.png" VerticalAlignment="Center" 
+                   HorizontalAlignment="Left" Margin="20,0,0,0"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <StackPanel>
+                    <TextBlock Text="TRƯỜNG ĐẠI HỌC GIAO THÔNG VẬN TẢI" FontWeight="Bold" HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" FontSize="22" Margin="0,10,0,0" />
+
+                    <TextBlock Text="KHOA ĐIỆN - ĐIỆN TỬ" FontWeight="Bold" HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" FontSize="22" Margin="0,10,0,0" />
+                </StackPanel>
+            </Grid>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/> 
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">

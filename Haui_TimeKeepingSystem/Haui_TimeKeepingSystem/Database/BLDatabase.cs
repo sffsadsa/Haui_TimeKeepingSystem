@@ -123,5 +123,10 @@ namespace Haui_TimeKeepingSystem.Database
             db.UpdatePassWord(cmd, PassWord);
         }
 
+        public void DeleteHistory()
+        {
+            string sqlCommand = "DELETE dbo.History";
+             db.DeleteHistory(sqlCommand);
+        }
     }
 }

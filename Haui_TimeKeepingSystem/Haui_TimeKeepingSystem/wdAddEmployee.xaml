@@ -14,7 +14,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"  
         mc:Ignorable="d" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen" WindowStyle="None"
-        Title="Thêm nhân viên" Height="710" Width="525">
+        Title="Thêm nhân viên" Height="800" Width="535">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.3*"/>
@@ -40,7 +40,8 @@
                                                   VerticalAlignment="Top"  Height="40" Width="450"
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
                                                  VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Tên người dùng"
-                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
+                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" 
+                             Margin="0,0,10,0"/>
 
                     <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
                                                    Text="Mã người dùng (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
@@ -49,7 +50,8 @@
                                                   VerticalAlignment="Top" Height="40" Width="450" 
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
                                                  VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Mã người dùng"
-                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
+                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" 
+                             Margin="0,0,10,0"/>
 
                     <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
                                                    Text="Số phòng (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
@@ -58,7 +60,8 @@
                                                   VerticalAlignment="Top" Height="40" Width="450" 
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
                                                  VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Số phòng"
-                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
+                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" 
+                             Margin="0,0,10,0"/>
 
                     <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
                                                    Text="Quan hệ với chủ nhà (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
@@ -67,7 +70,8 @@
                                                   VerticalAlignment="Top"  Height="40" Width="450" 
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
                                                  VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Quan hệ với chủ nhà"
-                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
+                                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}"
+                             Margin="0,0,10,0"/>
 
                     <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
                                                    Text="Hình ảnh (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
@@ -84,12 +88,21 @@
                     <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
                                                    Text="Mã thẻ từ (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
 
-                    <TextBox x:Name="txtFingerID" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    <TextBox x:Name="txtCardID" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                                                   VerticalAlignment="Top"  Height="40" Width="450" 
                                                   AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
                                                  VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Mã thẻ từ" IsEnabled="False" />
 
-                    
+
+                    <TextBlock Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,20,0,0" 
+                                                   Text="Mã vân tay (*)" HorizontalAlignment="Left" FontWeight="Bold"/>
+
+                    <TextBox x:Name="txtFingerID" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                                  VerticalAlignment="Top"  Height="40" Width="450" 
+                                                  AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Right"
+                                                 VerticalScrollBarVisibility="Auto" md:HintAssist.Hint="Mã vân tay" IsEnabled="False" />
+
+
                 </StackPanel>
             </Grid>
         </Grid>
