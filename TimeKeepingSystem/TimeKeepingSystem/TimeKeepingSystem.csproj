@@ -210,5 +210,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\IOT2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Mylogo3.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

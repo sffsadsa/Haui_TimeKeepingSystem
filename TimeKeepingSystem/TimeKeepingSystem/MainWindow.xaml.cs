@@ -140,8 +140,8 @@ namespace TimeKeepingSystem
                     txtEmployeeCode.Text = "";
                     txtDepartMent.Text = "";
                     txtJob.Text = "";
-                    txtName.Text = "";
-                    txtCode.Text = "";
+                    //txtName.Text = "";
+                    //txtCode.Text = "";
                     txtInputTime.Text = "";
 
                     Xulydata(data);
@@ -345,7 +345,7 @@ namespace TimeKeepingSystem
                 TimeKeeping.ID = Guid.NewGuid();
                 TimeKeeping.InputTime = DateTime.Now;
                 txtInputTime.Text = TimeKeeping.InputTime.ToString("HH:mm:ss dd/MM/yyyy");
-                img_People.Source = new BitmapImage(new Uri("pack://application:,,," + "/Resources/NVA.png"));
+                //img_People.Source = new BitmapImage(new Uri("pack://application:,,," + "/Resources/NVA.png"));
 
                 oBL.InsertHistory(TimeKeeping);
 
@@ -432,10 +432,10 @@ namespace TimeKeepingSystem
                     txtEmployeeCode.Text = TimeKeeping.EmployeeCode;
                     txtDepartMent.Text = TimeKeeping.Department;
                     txtJob.Text = TimeKeeping.EmployeeJob;
-                    txtName.Text = TimeKeeping.EmployeeName;
-                    txtCode.Text = TimeKeeping.EmployeeCode;
+                    //txtName.Text = TimeKeeping.EmployeeName;
+                    //txtCode.Text = TimeKeeping.EmployeeCode;
 
-                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
+                    //img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
 
                     string cmd = "i" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
                     //STM_Input.Write(cmd);
@@ -501,10 +501,10 @@ namespace TimeKeepingSystem
                     txtEmployeeCode.Text = TimeKeeping.EmployeeCode;
                     txtDepartMent.Text = TimeKeeping.Department;
                     txtJob.Text = TimeKeeping.EmployeeJob;
-                    txtName.Text = TimeKeeping.EmployeeName;
-                    txtCode.Text = TimeKeeping.EmployeeCode;
+                    //txtName.Text = TimeKeeping.EmployeeName;
+                    //txtCode.Text = TimeKeeping.EmployeeCode;
 
-                    img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
+                    //img_People.Source = new BitmapImage(new Uri("pack://application:,,," + item.ImagePath)); //"/Images/service.png"
 
                     string cmd = "i" + DateTime.Now.ToString("HH:mm:ss") + TimeKeeping.EmployeeName;
                     //STM_Input.Write(cmd);
@@ -560,8 +560,8 @@ namespace TimeKeepingSystem
                 txtEmployeeCode.Text = "";
                 txtDepartMent.Text = "";
                 txtJob.Text = "";
-                txtName.Text = "";
-                txtCode.Text = "";
+                //txtName.Text = "";
+                //txtCode.Text = "";
                 txtInputTime.Text = "";
 
                 MessageBox.Show("Vui lòng xác nhận quyền chủ nhà", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
