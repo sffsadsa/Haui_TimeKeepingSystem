@@ -59,3 +59,5 @@ D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\Ha
 D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\Haui_TimeKeepingSystem.csproj.CopyComplete
 D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\Haui_TimeKeepingSystem.exe
 D:\Github\TimeKeeping\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\Haui_TimeKeepingSystem.pdb
+D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\wdChangePassWord.g.cs
+D:\GitHub\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\Haui_TimeKeepingSystem\obj\Debug\wdChangePassWord.baml
